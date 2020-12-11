@@ -1,0 +1,3 @@
+<?xml version="1.0" encoding="UTF-8"?><rss version="2.0"><channel><title>Micah Snyder&apos;s blog</title><link>http://localhost:3000</link><description>Blog Posts Go Here</description><item><title>Introduction</title><link>http://localhost:3000/posts/01-introduction.html</link><description><![CDATA[<h1>Introduction</h1>
+]]></description><guid>http://localhost:3000/posts/01-introduction.html</guid></item><item><title>Error Handling in C</title><link>http://localhost:3000/posts/02-error-handling-in-c.html</link><description><![CDATA[<h1>Error Handling in C</h1>
+]]></description><guid>http://localhost:3000/posts/02-error-handling-in-c.html</guid></item></channel></rss>

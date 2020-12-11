@@ -1,0 +1,9 @@
+
+site:
+  title: Micah Snyder's blog
+  description: Blog Posts Go Here
+  base_url: https://blog.micahsnyder.dev
+posts:
+  rss: rss.xml
+syntax_highlight:
+  theme: base16-eighties.dark

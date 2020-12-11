@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  {% include "head.liquid" %}
+</head>
+
+<body>
+  <header>
+    {% include "header.liquid" %}
+  </header>
+
+  <div class="outerDiv">
+    <div class="leftDiv">
+      {{ page.content }}
+      <footer>
+        {% include "footer.liquid" %}
+      </footer>
+    </div>
+    <div class="rightDiv">
+      <h3>Posts</h3>
+      {% for post in collections.posts.pages %}
+        <p>
+          &nbsp;&nbsp;<a href=https://blog.micahsnyder.dev/{{ post.permalink }}>{{ post.title }}</a>
+        </p>
+      {% endfor %}
+    </div>
+    <div "style: clear:both;"></div>
+  </div>
+</body>
+
+</html>
