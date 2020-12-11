@@ -1,10 +1,9 @@
 ---
-layout: default.liquid
-
 title: Error Handling in C
-is_draft: true
+published_date: "2020-12-11 07:32:15 +0000"
+layout: default.liquid
+is_draft: false
 ---
-
 # Error Handling in C
 
 It is far too easy for C code to spring memory leaks due to shoddy error handling. In a larger code base poor error handling can result in years of agony tracking down bugs and digging out from small mountain of technical debt.

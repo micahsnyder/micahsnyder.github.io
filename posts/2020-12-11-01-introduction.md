@@ -1,10 +1,9 @@
 ---
-layout: default.liquid
-
 title: Introduction
-is_draft: true
+published_date: "2020-12-11 07:32:09 +0000"
+layout: default.liquid
+is_draft: false
 ---
-
 # Introduction
 
 Hi, I'm Micah Snyder. I'm what you might think of as a typical systems software developer. These days I primarily manage and develop on [a large cross-platform open-source C codebase](https://github.com/Cisco-Talos/clamav-devel). But I'm also an experienced and enthusiastic Python 🐍 programmer. In addition, I've taken a fascination with learning the Rust programming language 🦀 and can't wait to use it more professionally.
