@@ -14,6 +14,7 @@ body {
   /* background-color: #006699;
   color: #fff; */
   max-width: 1200px;
+  min-width: 800px;
   min-height: 600px;
   margin: 0px auto;
   padding: 5px;
@@ -26,12 +27,6 @@ body {
   width: 79%;
   min-height: 600px;
   float: left;
-}
-.leftDiv iframe {
-  position:relative;
-  width:100%;
-  overflow: hidden;
-  pointer-events:none;
 }
 .rightDiv
 {
@@ -147,7 +142,7 @@ header {
   color: lightgray;
   font-weight: 800;
   margin: 0 0 40px;
-  font-size: 40px;
+  font-size: 32px;
 }
 
 footer {

@@ -40,7 +40,7 @@ typedef struct {
 } named_data_t;
 
 /* We'll allocate the array of data pointers in increments of 100 */
-#define DATA_ARRAY_BLOCK_SIZE 100
+#define ARRAY_BLK_SZ 100
 
 static pthread_mutex_t data_array_lock = PTHREAD_MUTEX_INITIALIZER;
 static named_data_t ** g_data_array = NULL;
@@ -70,7 +70,7 @@ bool append_data_element(const char * name, void * data) {
     /* We don't own the name, so let's duplicate it. */
     DO_STRDUP(new_element->name, name);
 
-    /* We're being given ownership of the data, so we'll just assign the pointer. */
+    /* We're given ownership of the data, so we'll assign the pointer. */
     new_element->name = data;
 
     /* Lock the array so we can safely add our new element. */
@@ -82,13 +82,15 @@ bool append_data_element(const char * name, void * data) {
     if (NULL == g_data_array) {
         /* Array doesn't exist, let's allocate it */
 
-        DO_MALLOC(g_data_array, DATA_ARRAY_BLOCK_SIZE * sizeof(named_data_t*));
-        g_data_array_size = DATA_ARRAY_BLOCK_SIZE;
+        DO_MALLOC(g_data_array, ARRAY_BLK_SZ * sizeof(named_data_t*));
+        g_data_array_size = ARRAY_BLK_SZ;
 
     } else if (g_num_data_elements == g_data_array_size) {
         /* Array is full, allocate more memory */
-        DO_REALLOC(g_data_array, (g_data_array_size + DATA_ARRAY_BLOCK_SIZE) * sizeof(named_data_t*));
-        g_data_array_size += DATA_ARRAY_BLOCK_SIZE;
+        DO_REALLOC(
+            g_data_array,
+            (g_data_array_size + ARRAY_BLK_SZ) * sizeof(named_data_t*));
+        g_data_array_size += ARRAY_BLK_SZ;
     }
 
     g_data_array[g_num_data_elements] = new_element;

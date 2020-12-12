@@ -18,7 +18,7 @@ I haven't always been an open-source software contributor. To be honest, I kind-
 
 I started this blog to share some of the lessons that I've learned along the way.
 
-If you're interested in my work, you can follow me on [GitHub](https://github.com/micahsnyder) and [GitLab](https://gitlab.com/micahsnyder) and follow me on [Twitter](https://twitter.com/0xC0000063).
+If you're interested in my work, you view my public work on [GitHub](https://github.com/micahsnyder) and [GitLab](https://gitlab.com/micahsnyder) and follow me on [Twitter](https://twitter.com/0xC0000063).
 
 Until next time!
 

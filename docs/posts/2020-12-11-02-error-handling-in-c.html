@@ -52,7 +52,7 @@
 } named_data_t;
 
 </span><span style="background-color:#2d2d2d;color:#747369;">/* We&#39;ll allocate the array of data pointers in increments of 100 */</span><span style="background-color:#2d2d2d;color:#d3d0c8;">
-#define DATA_ARRAY_BLOCK_SIZE </span><span style="background-color:#2d2d2d;color:#f99157;">100
+#define ARRAY_BLK_SZ </span><span style="background-color:#2d2d2d;color:#f99157;">100
 
 </span><span style="background-color:#2d2d2d;color:#cc99cc;">static </span><span style="background-color:#2d2d2d;color:#d3d0c8;">pthread_mutex_t data_array_lock = PTHREAD_MUTEX_INITIALIZER;
 </span><span style="background-color:#2d2d2d;color:#cc99cc;">static</span><span style="background-color:#2d2d2d;color:#d3d0c8;"> named_data_t ** g_data_array = </span><span style="background-color:#2d2d2d;color:#f99157;">NULL</span><span style="background-color:#2d2d2d;color:#d3d0c8;">;
@@ -91,7 +91,7 @@
         </span><span style="background-color:#2d2d2d;color:#cc99cc;">return </span><span style="background-color:#2d2d2d;color:#f99157;">false</span><span style="background-color:#2d2d2d;color:#d3d0c8;">;
     }
 
-    </span><span style="background-color:#2d2d2d;color:#747369;">/* We&#39;re being given ownership of the data, so we&#39;ll just assign the pointer. */</span><span style="background-color:#2d2d2d;color:#d3d0c8;">
+    </span><span style="background-color:#2d2d2d;color:#747369;">/* We&#39;re given ownership of the data, so we&#39;ll assign the pointer. */</span><span style="background-color:#2d2d2d;color:#d3d0c8;">
     new_element-&gt;name = data;
 
     </span><span style="background-color:#2d2d2d;color:#747369;">/* Lock the array so we can safely add our new element. */
@@ -103,7 +103,7 @@
     </span><span style="background-color:#2d2d2d;color:#cc99cc;">if </span><span style="background-color:#2d2d2d;color:#d3d0c8;">(</span><span style="background-color:#2d2d2d;color:#f99157;">NULL </span><span style="background-color:#2d2d2d;color:#d3d0c8;">== g_data_array) {
         </span><span style="background-color:#2d2d2d;color:#747369;">/* Array doesn&#39;t exist, let&#39;s allocate it */</span><span style="background-color:#2d2d2d;color:#d3d0c8;">
 
-        g_data_array = </span><span style="background-color:#2d2d2d;color:#66cccc;">malloc</span><span style="background-color:#2d2d2d;color:#d3d0c8;">(DATA_ARRAY_BLOCK_SIZE * sizeof(named_data_t*));
+        g_data_array = </span><span style="background-color:#2d2d2d;color:#66cccc;">malloc</span><span style="background-color:#2d2d2d;color:#d3d0c8;">(ARRAY_BLK_SZ * sizeof(named_data_t*));
         </span><span style="background-color:#2d2d2d;color:#cc99cc;">if </span><span style="background-color:#2d2d2d;color:#d3d0c8;">(</span><span style="background-color:#2d2d2d;color:#f99157;">NULL </span><span style="background-color:#2d2d2d;color:#d3d0c8;">== g_data_array) {
             </span><span style="background-color:#2d2d2d;color:#747369;">/* Failed to allocate memory for data array! */
             </span><span style="background-color:#2d2d2d;color:#66cccc;">free</span><span style="background-color:#2d2d2d;color:#d3d0c8;">(new_element-&gt;name);
@@ -111,13 +111,15 @@
             </span><span style="background-color:#2d2d2d;color:#cc99cc;">return </span><span style="background-color:#2d2d2d;color:#f99157;">false</span><span style="background-color:#2d2d2d;color:#d3d0c8;">;
         }
 
-        g_data_array_size = DATA_ARRAY_BLOCK_SIZE;
+        g_data_array_size = ARRAY_BLK_SZ;
 
     } </span><span style="background-color:#2d2d2d;color:#cc99cc;">else if </span><span style="background-color:#2d2d2d;color:#d3d0c8;">(g_num_data_elements == g_data_array_size) {
         </span><span style="background-color:#2d2d2d;color:#747369;">/* Array is full, allocate more memory */</span><span style="background-color:#2d2d2d;color:#d3d0c8;">
         named_data_t ** temp;
 
-        temp = </span><span style="background-color:#2d2d2d;color:#66cccc;">realloc</span><span style="background-color:#2d2d2d;color:#d3d0c8;">(g_data_array, (g_data_array_size + DATA_ARRAY_BLOCK_SIZE) * sizeof(named_data_t*));
+        temp = </span><span style="background-color:#2d2d2d;color:#66cccc;">realloc</span><span style="background-color:#2d2d2d;color:#d3d0c8;">(
+            g_data_array,
+            (g_data_array_size + ARRAY_BLK_SZ) * sizeof(named_data_t*));
         </span><span style="background-color:#2d2d2d;color:#cc99cc;">if </span><span style="background-color:#2d2d2d;color:#d3d0c8;">(</span><span style="background-color:#2d2d2d;color:#f99157;">NULL </span><span style="background-color:#2d2d2d;color:#d3d0c8;">== temp) {
             </span><span style="background-color:#2d2d2d;color:#747369;">/* Failed to increase size of data array! */
             </span><span style="background-color:#2d2d2d;color:#66cccc;">free</span><span style="background-color:#2d2d2d;color:#d3d0c8;">(new_element-&gt;name);
@@ -126,7 +128,7 @@
         }
 
         g_data_array = temp;
-        g_data_array_size += DATA_ARRAY_BLOCK_SIZE;
+        g_data_array_size += ARRAY_BLK_SZ;
     }
 
     g_data_array[g_num_data_elements] = new_element;
@@ -135,7 +137,7 @@
     </span><span style="background-color:#2d2d2d;color:#747369;">/* Unlock the array so other threads can access it once more. */
     </span><span style="background-color:#2d2d2d;color:#6699cc;">pthread_mutex_unlock</span><span style="background-color:#2d2d2d;color:#d3d0c8;">(&amp;data_array_lock);
 
-    </span><span style="background-color:#2d2d2d;color:#66cccc;">printf</span><span style="background-color:#2d2d2d;color:#d3d0c8;">(&quot;</span><span style="background-color:#2d2d2d;color:#99cc99;">add_named_rectangle: Added &#39;</span><span style="background-color:#2d2d2d;color:#f99157;">%s</span><span style="background-color:#2d2d2d;color:#99cc99;">&#39; element to data array!</span><span style="background-color:#2d2d2d;color:#66cccc;">\n</span><span style="background-color:#2d2d2d;color:#d3d0c8;">&quot;, name);
+    </span><span style="background-color:#2d2d2d;color:#66cccc;">printf</span><span style="background-color:#2d2d2d;color:#d3d0c8;">(&quot;</span><span style="background-color:#2d2d2d;color:#99cc99;">add_named_rectangle: Added &#39;</span><span style="background-color:#2d2d2d;color:#f99157;">%s</span><span style="background-color:#2d2d2d;color:#99cc99;">&#39; element to array!</span><span style="background-color:#2d2d2d;color:#66cccc;">\n</span><span style="background-color:#2d2d2d;color:#d3d0c8;">&quot;, name);
 
     </span><span style="background-color:#2d2d2d;color:#cc99cc;">return </span><span style="background-color:#2d2d2d;color:#f99157;">true</span><span style="background-color:#2d2d2d;color:#d3d0c8;">;
 }
@@ -165,7 +167,7 @@
 } named_data_t;
 
 </span><span style="background-color:#2d2d2d;color:#747369;">/* We&#39;ll allocate the array of data pointers in increments of 100 */</span><span style="background-color:#2d2d2d;color:#d3d0c8;">
-#define DATA_ARRAY_BLOCK_SIZE </span><span style="background-color:#2d2d2d;color:#f99157;">100
+#define ARRAY_BLK_SZ </span><span style="background-color:#2d2d2d;color:#f99157;">100
 
 </span><span style="background-color:#2d2d2d;color:#cc99cc;">static </span><span style="background-color:#2d2d2d;color:#d3d0c8;">pthread_mutex_t data_array_lock = PTHREAD_MUTEX_INITIALIZER;
 </span><span style="background-color:#2d2d2d;color:#cc99cc;">static</span><span style="background-color:#2d2d2d;color:#d3d0c8;"> named_data_t ** g_data_array = </span><span style="background-color:#2d2d2d;color:#f99157;">NULL</span><span style="background-color:#2d2d2d;color:#d3d0c8;">;
@@ -204,7 +206,7 @@
             </span><span style="background-color:#2d2d2d;color:#cc99cc;">break</span><span style="background-color:#2d2d2d;color:#d3d0c8;">;
         }
 
-        </span><span style="background-color:#2d2d2d;color:#747369;">/* We&#39;re being given ownership of the data, so we&#39;ll just assign the pointer. */</span><span style="background-color:#2d2d2d;color:#d3d0c8;">
+        </span><span style="background-color:#2d2d2d;color:#747369;">/* We&#39;re given ownership of the data, so we&#39;ll assign the pointer. */</span><span style="background-color:#2d2d2d;color:#d3d0c8;">
         new_element-&gt;name = data;
 
         </span><span style="background-color:#2d2d2d;color:#747369;">/* Lock the array so we can safely add our new element. */
@@ -216,27 +218,31 @@
         </span><span style="background-color:#2d2d2d;color:#cc99cc;">if </span><span style="background-color:#2d2d2d;color:#d3d0c8;">(</span><span style="background-color:#2d2d2d;color:#f99157;">NULL </span><span style="background-color:#2d2d2d;color:#d3d0c8;">== g_data_array) {
             </span><span style="background-color:#2d2d2d;color:#747369;">/* Array doesn&#39;t exist, let&#39;s allocate it */</span><span style="background-color:#2d2d2d;color:#d3d0c8;">
 
-            g_data_array = </span><span style="background-color:#2d2d2d;color:#66cccc;">malloc</span><span style="background-color:#2d2d2d;color:#d3d0c8;">(DATA_ARRAY_BLOCK_SIZE * sizeof(named_data_t*));
+            g_data_array = </span><span style="background-color:#2d2d2d;color:#66cccc;">malloc</span><span style="background-color:#2d2d2d;color:#d3d0c8;">(ARRAY_BLK_SZ * sizeof(named_data_t*));
             </span><span style="background-color:#2d2d2d;color:#cc99cc;">if </span><span style="background-color:#2d2d2d;color:#d3d0c8;">(</span><span style="background-color:#2d2d2d;color:#f99157;">NULL </span><span style="background-color:#2d2d2d;color:#d3d0c8;">== g_data_array) {
                 </span><span style="background-color:#2d2d2d;color:#747369;">/* Failed to allocate memory for data array! */
-                </span><span style="background-color:#2d2d2d;color:#6699cc;">pthread_mutex_unlock</span><span style="background-color:#2d2d2d;color:#d3d0c8;">(&amp;data_array_lock);  </span><span style="background-color:#2d2d2d;color:#747369;">/* !! We still have to unlock the mutex before we break */
+                /* !! We still have to unlock the mutex before we break */
+                </span><span style="background-color:#2d2d2d;color:#6699cc;">pthread_mutex_unlock</span><span style="background-color:#2d2d2d;color:#d3d0c8;">(&amp;data_array_lock);
                 </span><span style="background-color:#2d2d2d;color:#cc99cc;">break</span><span style="background-color:#2d2d2d;color:#d3d0c8;">;
             }
 
-            g_data_array_size = DATA_ARRAY_BLOCK_SIZE;
+            g_data_array_size = ARRAY_BLK_SZ;
 
         } </span><span style="background-color:#2d2d2d;color:#cc99cc;">else if </span><span style="background-color:#2d2d2d;color:#d3d0c8;">(g_num_data_elements == g_data_array_size) {
             </span><span style="background-color:#2d2d2d;color:#747369;">/* Array is full, allocate more memory */</span><span style="background-color:#2d2d2d;color:#d3d0c8;">
             named_data_t ** temp;
 
-            temp = </span><span style="background-color:#2d2d2d;color:#66cccc;">realloc</span><span style="background-color:#2d2d2d;color:#d3d0c8;">(g_data_array, (g_data_array_size + DATA_ARRAY_BLOCK_SIZE) * sizeof(named_data_t*));
+            temp = </span><span style="background-color:#2d2d2d;color:#66cccc;">realloc</span><span style="background-color:#2d2d2d;color:#d3d0c8;">(
+                g_data_array,
+                (g_data_array_size + ARRAY_BLK_SZ) * sizeof(named_data_t*));
             </span><span style="background-color:#2d2d2d;color:#cc99cc;">if </span><span style="background-color:#2d2d2d;color:#d3d0c8;">(</span><span style="background-color:#2d2d2d;color:#f99157;">NULL </span><span style="background-color:#2d2d2d;color:#d3d0c8;">== temp) {
                 </span><span style="background-color:#2d2d2d;color:#747369;">/* Failed to increase size of data array! */
-                </span><span style="background-color:#2d2d2d;color:#6699cc;">pthread_mutex_unlock</span><span style="background-color:#2d2d2d;color:#d3d0c8;">(&amp;data_array_lock);  </span><span style="background-color:#2d2d2d;color:#747369;">/* !! We still have to unlock the mutex before we break */
+                /* !! We still have to unlock the mutex before we break */
+                </span><span style="background-color:#2d2d2d;color:#6699cc;">pthread_mutex_unlock</span><span style="background-color:#2d2d2d;color:#d3d0c8;">(&amp;data_array_lock);
                 </span><span style="background-color:#2d2d2d;color:#cc99cc;">break</span><span style="background-color:#2d2d2d;color:#d3d0c8;">;
             }
             g_data_array = temp;
-            g_data_array_size += DATA_ARRAY_BLOCK_SIZE;
+            g_data_array_size += ARRAY_BLK_SZ;
         }
 
         g_data_array[g_num_data_elements] = new_element;
@@ -296,7 +302,7 @@
 } named_data_t;
 
 </span><span style="background-color:#2d2d2d;color:#747369;">/* We&#39;ll allocate the array of data pointers in increments of 100 */</span><span style="background-color:#2d2d2d;color:#d3d0c8;">
-#define DATA_ARRAY_BLOCK_SIZE </span><span style="background-color:#2d2d2d;color:#f99157;">100
+#define ARRAY_BLK_SZ </span><span style="background-color:#2d2d2d;color:#f99157;">100
 
 </span><span style="background-color:#2d2d2d;color:#cc99cc;">static </span><span style="background-color:#2d2d2d;color:#d3d0c8;">pthread_mutex_t data_array_lock = PTHREAD_MUTEX_INITIALIZER;
 </span><span style="background-color:#2d2d2d;color:#cc99cc;">static</span><span style="background-color:#2d2d2d;color:#d3d0c8;"> named_data_t ** g_data_array = </span><span style="background-color:#2d2d2d;color:#f99157;">NULL</span><span style="background-color:#2d2d2d;color:#d3d0c8;">;
@@ -334,7 +340,7 @@
         </span><span style="background-color:#2d2d2d;color:#cc99cc;">goto</span><span style="background-color:#2d2d2d;color:#d3d0c8;"> done;
     }
 
-    </span><span style="background-color:#2d2d2d;color:#747369;">/* We&#39;re being given ownership of the data, so we&#39;ll just assign the pointer. */</span><span style="background-color:#2d2d2d;color:#d3d0c8;">
+    </span><span style="background-color:#2d2d2d;color:#747369;">/* We&#39;re given ownership of the data, so we&#39;ll assign the pointer. */</span><span style="background-color:#2d2d2d;color:#d3d0c8;">
     new_element-&gt;name = data;
 
     </span><span style="background-color:#2d2d2d;color:#747369;">/* Lock the array so we can safely add our new element. */
@@ -346,25 +352,27 @@
     </span><span style="background-color:#2d2d2d;color:#cc99cc;">if </span><span style="background-color:#2d2d2d;color:#d3d0c8;">(</span><span style="background-color:#2d2d2d;color:#f99157;">NULL </span><span style="background-color:#2d2d2d;color:#d3d0c8;">== g_data_array) {
         </span><span style="background-color:#2d2d2d;color:#747369;">/* Array doesn&#39;t exist, let&#39;s allocate it */</span><span style="background-color:#2d2d2d;color:#d3d0c8;">
 
-        g_data_array = </span><span style="background-color:#2d2d2d;color:#66cccc;">malloc</span><span style="background-color:#2d2d2d;color:#d3d0c8;">(DATA_ARRAY_BLOCK_SIZE * sizeof(named_data_t*));
+        g_data_array = </span><span style="background-color:#2d2d2d;color:#66cccc;">malloc</span><span style="background-color:#2d2d2d;color:#d3d0c8;">(ARRAY_BLK_SZ * sizeof(named_data_t*));
         </span><span style="background-color:#2d2d2d;color:#cc99cc;">if </span><span style="background-color:#2d2d2d;color:#d3d0c8;">(</span><span style="background-color:#2d2d2d;color:#f99157;">NULL </span><span style="background-color:#2d2d2d;color:#d3d0c8;">== g_data_array) {
             </span><span style="background-color:#2d2d2d;color:#747369;">/* Failed to allocate memory for data array! */
             </span><span style="background-color:#2d2d2d;color:#cc99cc;">goto</span><span style="background-color:#2d2d2d;color:#d3d0c8;"> unlock;
         }
 
-        g_data_array_size = DATA_ARRAY_BLOCK_SIZE;
+        g_data_array_size = ARRAY_BLK_SZ;
 
     } </span><span style="background-color:#2d2d2d;color:#cc99cc;">else if </span><span style="background-color:#2d2d2d;color:#d3d0c8;">(g_num_data_elements == g_data_array_size) {
         </span><span style="background-color:#2d2d2d;color:#747369;">/* Array is full, allocate more memory */</span><span style="background-color:#2d2d2d;color:#d3d0c8;">
         named_data_t ** temp;
 
-        temp = </span><span style="background-color:#2d2d2d;color:#66cccc;">realloc</span><span style="background-color:#2d2d2d;color:#d3d0c8;">(g_data_array, (g_data_array_size + DATA_ARRAY_BLOCK_SIZE) * sizeof(named_data_t*));
+        temp = </span><span style="background-color:#2d2d2d;color:#66cccc;">realloc</span><span style="background-color:#2d2d2d;color:#d3d0c8;">(
+            g_data_array,
+            (g_data_array_size + ARRAY_BLK_SZ) * sizeof(named_data_t*));
         </span><span style="background-color:#2d2d2d;color:#cc99cc;">if </span><span style="background-color:#2d2d2d;color:#d3d0c8;">(</span><span style="background-color:#2d2d2d;color:#f99157;">NULL </span><span style="background-color:#2d2d2d;color:#d3d0c8;">== temp) {
             </span><span style="background-color:#2d2d2d;color:#747369;">/* Failed to increase size of data array! */
             </span><span style="background-color:#2d2d2d;color:#cc99cc;">goto</span><span style="background-color:#2d2d2d;color:#d3d0c8;"> unlock;
         }
         g_data_array = temp;
-        g_data_array_size += DATA_ARRAY_BLOCK_SIZE;
+        g_data_array_size += ARRAY_BLK_SZ;
     }
 
     g_data_array[g_num_data_elements] = new_element;
@@ -447,7 +455,7 @@ done:
 } named_data_t;
 
 </span><span style="background-color:#2d2d2d;color:#747369;">/* We&#39;ll allocate the array of data pointers in increments of 100 */</span><span style="background-color:#2d2d2d;color:#d3d0c8;">
-#define DATA_ARRAY_BLOCK_SIZE </span><span style="background-color:#2d2d2d;color:#f99157;">100
+#define ARRAY_BLK_SZ </span><span style="background-color:#2d2d2d;color:#f99157;">100
 
 </span><span style="background-color:#2d2d2d;color:#cc99cc;">static </span><span style="background-color:#2d2d2d;color:#d3d0c8;">pthread_mutex_t data_array_lock = PTHREAD_MUTEX_INITIALIZER;
 </span><span style="background-color:#2d2d2d;color:#cc99cc;">static</span><span style="background-color:#2d2d2d;color:#d3d0c8;"> named_data_t ** g_data_array = </span><span style="background-color:#2d2d2d;color:#f99157;">NULL</span><span style="background-color:#2d2d2d;color:#d3d0c8;">;
@@ -477,7 +485,7 @@ done:
     </span><span style="background-color:#2d2d2d;color:#747369;">/* We don&#39;t own the name, so let&#39;s duplicate it. */
     </span><span style="background-color:#2d2d2d;color:#6699cc;">DO_STRDUP</span><span style="background-color:#2d2d2d;color:#d3d0c8;">(new_element-&gt;name, name);
 
-    </span><span style="background-color:#2d2d2d;color:#747369;">/* We&#39;re being given ownership of the data, so we&#39;ll just assign the pointer. */</span><span style="background-color:#2d2d2d;color:#d3d0c8;">
+    </span><span style="background-color:#2d2d2d;color:#747369;">/* We&#39;re given ownership of the data, so we&#39;ll assign the pointer. */</span><span style="background-color:#2d2d2d;color:#d3d0c8;">
     new_element-&gt;name = data;
 
     </span><span style="background-color:#2d2d2d;color:#747369;">/* Lock the array so we can safely add our new element. */
@@ -489,13 +497,15 @@ done:
     </span><span style="background-color:#2d2d2d;color:#cc99cc;">if </span><span style="background-color:#2d2d2d;color:#d3d0c8;">(</span><span style="background-color:#2d2d2d;color:#f99157;">NULL </span><span style="background-color:#2d2d2d;color:#d3d0c8;">== g_data_array) {
         </span><span style="background-color:#2d2d2d;color:#747369;">/* Array doesn&#39;t exist, let&#39;s allocate it */
 
-        </span><span style="background-color:#2d2d2d;color:#6699cc;">DO_MALLOC</span><span style="background-color:#2d2d2d;color:#d3d0c8;">(g_data_array, DATA_ARRAY_BLOCK_SIZE * sizeof(named_data_t*));
-        g_data_array_size = DATA_ARRAY_BLOCK_SIZE;
+        </span><span style="background-color:#2d2d2d;color:#6699cc;">DO_MALLOC</span><span style="background-color:#2d2d2d;color:#d3d0c8;">(g_data_array, ARRAY_BLK_SZ * sizeof(named_data_t*));
+        g_data_array_size = ARRAY_BLK_SZ;
 
     } </span><span style="background-color:#2d2d2d;color:#cc99cc;">else if </span><span style="background-color:#2d2d2d;color:#d3d0c8;">(g_num_data_elements == g_data_array_size) {
         </span><span style="background-color:#2d2d2d;color:#747369;">/* Array is full, allocate more memory */
-        </span><span style="background-color:#2d2d2d;color:#6699cc;">DO_REALLOC</span><span style="background-color:#2d2d2d;color:#d3d0c8;">(g_data_array, (g_data_array_size + DATA_ARRAY_BLOCK_SIZE) * sizeof(named_data_t*));
-        g_data_array_size += DATA_ARRAY_BLOCK_SIZE;
+        </span><span style="background-color:#2d2d2d;color:#6699cc;">DO_REALLOC</span><span style="background-color:#2d2d2d;color:#d3d0c8;">(
+            g_data_array,
+            (g_data_array_size + ARRAY_BLK_SZ) * sizeof(named_data_t*));
+        g_data_array_size += ARRAY_BLK_SZ;
     }
 
     g_data_array[g_num_data_elements] = new_element;
@@ -553,7 +563,7 @@ done:
 } named_data_t;
 
 </span><span style="background-color:#2d2d2d;color:#747369;">/* We&#39;ll allocate the array of data pointers in increments of 100 */</span><span style="background-color:#2d2d2d;color:#d3d0c8;">
-#define DATA_ARRAY_BLOCK_SIZE </span><span style="background-color:#2d2d2d;color:#f99157;">100
+#define ARRAY_BLK_SZ </span><span style="background-color:#2d2d2d;color:#f99157;">100
 
 </span><span style="background-color:#2d2d2d;color:#cc99cc;">static </span><span style="background-color:#2d2d2d;color:#d3d0c8;">pthread_mutex_t data_array_lock = PTHREAD_MUTEX_INITIALIZER;
 </span><span style="background-color:#2d2d2d;color:#cc99cc;">static</span><span style="background-color:#2d2d2d;color:#d3d0c8;"> named_data_t ** g_data_array = </span><span style="background-color:#2d2d2d;color:#f99157;">NULL</span><span style="background-color:#2d2d2d;color:#d3d0c8;">;
@@ -564,20 +574,23 @@ done:
     named_data_t ** temp;
 
     </span><span style="background-color:#2d2d2d;color:#cc99cc;">if </span><span style="background-color:#2d2d2d;color:#d3d0c8;">((</span><span style="background-color:#2d2d2d;color:#f99157;">NULL </span><span style="background-color:#2d2d2d;color:#d3d0c8;">== g_data_array) &amp;&amp;
-        (</span><span style="background-color:#2d2d2d;color:#f99157;">NULL </span><span style="background-color:#2d2d2d;color:#d3d0c8;">== (g_data_array = </span><span style="background-color:#2d2d2d;color:#66cccc;">malloc</span><span style="background-color:#2d2d2d;color:#d3d0c8;">(DATA_ARRAY_BLOCK_SIZE * sizeof(named_data_t*))))) {
+        (</span><span style="background-color:#2d2d2d;color:#f99157;">NULL </span><span style="background-color:#2d2d2d;color:#d3d0c8;">== (g_data_array = </span><span style="background-color:#2d2d2d;color:#66cccc;">malloc</span><span style="background-color:#2d2d2d;color:#d3d0c8;">(
+            ARRAY_BLK_SZ * sizeof(named_data_t*))))) {
         </span><span style="background-color:#2d2d2d;color:#747369;">/* Failed to allocate memory for data array! */
         </span><span style="background-color:#2d2d2d;color:#cc99cc;">return </span><span style="background-color:#2d2d2d;color:#f99157;">false</span><span style="background-color:#2d2d2d;color:#d3d0c8;">;
     } </span><span style="background-color:#2d2d2d;color:#cc99cc;">else </span><span style="background-color:#2d2d2d;color:#d3d0c8;">{
-        g_data_array_size = DATA_ARRAY_BLOCK_SIZE;
+        g_data_array_size = ARRAY_BLK_SZ;
     }
 
     </span><span style="background-color:#2d2d2d;color:#cc99cc;">if </span><span style="background-color:#2d2d2d;color:#d3d0c8;">((g_num_data_elements == g_data_array_size) &amp;&amp;
-        (</span><span style="background-color:#2d2d2d;color:#f99157;">NULL </span><span style="background-color:#2d2d2d;color:#d3d0c8;">== (temp = </span><span style="background-color:#2d2d2d;color:#66cccc;">realloc</span><span style="background-color:#2d2d2d;color:#d3d0c8;">(g_data_array, (g_data_array_size + DATA_ARRAY_BLOCK_SIZE) * sizeof(named_data_t*))))) {
+        (</span><span style="background-color:#2d2d2d;color:#f99157;">NULL </span><span style="background-color:#2d2d2d;color:#d3d0c8;">== (temp = </span><span style="background-color:#2d2d2d;color:#66cccc;">realloc</span><span style="background-color:#2d2d2d;color:#d3d0c8;">(
+            g_data_array,
+            (g_data_array_size + ARRAY_BLK_SZ) * sizeof(named_data_t*))))) {
         </span><span style="background-color:#2d2d2d;color:#747369;">/* Array was is full, and we failed to allocate more memory */
         </span><span style="background-color:#2d2d2d;color:#cc99cc;">return </span><span style="background-color:#2d2d2d;color:#f99157;">false</span><span style="background-color:#2d2d2d;color:#d3d0c8;">;
     } </span><span style="background-color:#2d2d2d;color:#cc99cc;">else </span><span style="background-color:#2d2d2d;color:#d3d0c8;">{
         g_data_array = temp;
-        g_data_array_size += DATA_ARRAY_BLOCK_SIZE;
+        g_data_array_size += ARRAY_BLK_SZ;
     }
 
     </span><span style="background-color:#2d2d2d;color:#cc99cc;">return </span><span style="background-color:#2d2d2d;color:#f99157;">true</span><span style="background-color:#2d2d2d;color:#d3d0c8;">;
@@ -630,7 +643,7 @@ done:
     </span><span style="background-color:#2d2d2d;color:#d3d0c8;">} </span><span style="background-color:#2d2d2d;color:#cc99cc;">else if </span><span style="background-color:#2d2d2d;color:#d3d0c8;">(</span><span style="background-color:#2d2d2d;color:#f99157;">NULL </span><span style="background-color:#2d2d2d;color:#d3d0c8;">== (new_element-&gt;name = </span><span style="background-color:#2d2d2d;color:#6699cc;">strdup</span><span style="background-color:#2d2d2d;color:#d3d0c8;">(name))){
         </span><span style="background-color:#2d2d2d;color:#747369;">/* Out of memory! */
     </span><span style="background-color:#2d2d2d;color:#d3d0c8;">} </span><span style="background-color:#2d2d2d;color:#cc99cc;">else </span><span style="background-color:#2d2d2d;color:#d3d0c8;">{
-        </span><span style="background-color:#2d2d2d;color:#747369;">/* We&#39;re being given ownership of the data, so we&#39;ll just assign the pointer. */</span><span style="background-color:#2d2d2d;color:#d3d0c8;">
+        </span><span style="background-color:#2d2d2d;color:#747369;">/* We&#39;re given ownership of the data, so we&#39;ll assign the pointer. */</span><span style="background-color:#2d2d2d;color:#d3d0c8;">
         new_element-&gt;name = data;
 
         </span><span style="background-color:#2d2d2d;color:#cc99cc;">if </span><span style="background-color:#2d2d2d;color:#d3d0c8;">(</span><span style="background-color:#2d2d2d;color:#f99157;">false </span><span style="background-color:#2d2d2d;color:#d3d0c8;">== </span><span style="background-color:#2d2d2d;color:#6699cc;">add_element</span><span style="background-color:#2d2d2d;color:#d3d0c8;">(new_element)) {
@@ -639,7 +652,7 @@ done:
             </span><span style="background-color:#2d2d2d;color:#747369;">/*
              * Successs
              */
-            </span><span style="background-color:#2d2d2d;color:#66cccc;">printf</span><span style="background-color:#2d2d2d;color:#d3d0c8;">(&quot;</span><span style="background-color:#2d2d2d;color:#99cc99;">add_named_rectangle: Added &#39;</span><span style="background-color:#2d2d2d;color:#f99157;">%s</span><span style="background-color:#2d2d2d;color:#99cc99;">&#39; element to data array!</span><span style="background-color:#2d2d2d;color:#66cccc;">\n</span><span style="background-color:#2d2d2d;color:#d3d0c8;">&quot;, name);
+            </span><span style="background-color:#2d2d2d;color:#66cccc;">printf</span><span style="background-color:#2d2d2d;color:#d3d0c8;">(&quot;</span><span style="background-color:#2d2d2d;color:#99cc99;">add_named_rectangle: Added &#39;</span><span style="background-color:#2d2d2d;color:#f99157;">%s</span><span style="background-color:#2d2d2d;color:#99cc99;">&#39; element to array!</span><span style="background-color:#2d2d2d;color:#66cccc;">\n</span><span style="background-color:#2d2d2d;color:#d3d0c8;">&quot;, name);
         }
     }
 
@@ -654,15 +667,6 @@ done:
     }
 
     </span><span style="background-color:#2d2d2d;color:#cc99cc;">return</span><span style="background-color:#2d2d2d;color:#d3d0c8;"> status;
-}
-
-</span><span style="background-color:#2d2d2d;color:#cc99cc;">int </span><span style="background-color:#2d2d2d;color:#6699cc;">main</span><span style="background-color:#2d2d2d;color:#d3d0c8;">(</span><span style="background-color:#2d2d2d;color:#cc99cc;">void</span><span style="background-color:#2d2d2d;color:#d3d0c8;">) {
-    </span><span style="background-color:#2d2d2d;color:#cc99cc;">if </span><span style="background-color:#2d2d2d;color:#d3d0c8;">(</span><span style="background-color:#2d2d2d;color:#f99157;">true </span><span style="background-color:#2d2d2d;color:#d3d0c8;">== </span><span style="background-color:#2d2d2d;color:#6699cc;">append_data_element</span><span style="background-color:#2d2d2d;color:#d3d0c8;">(&quot;</span><span style="background-color:#2d2d2d;color:#99cc99;">Hello</span><span style="background-color:#2d2d2d;color:#d3d0c8;">&quot;, (</span><span style="background-color:#2d2d2d;color:#cc99cc;">void </span><span style="background-color:#2d2d2d;color:#d3d0c8;">*)&quot;</span><span style="background-color:#2d2d2d;color:#99cc99;">World</span><span style="background-color:#2d2d2d;color:#d3d0c8;">&quot;)) {
-        </span><span style="background-color:#2d2d2d;color:#66cccc;">printf</span><span style="background-color:#2d2d2d;color:#d3d0c8;">(&quot;</span><span style="background-color:#2d2d2d;color:#99cc99;">Added element to array</span><span style="background-color:#2d2d2d;color:#66cccc;">\n</span><span style="background-color:#2d2d2d;color:#d3d0c8;">&quot;);
-        </span><span style="background-color:#2d2d2d;color:#cc99cc;">return </span><span style="background-color:#2d2d2d;color:#f99157;">0</span><span style="background-color:#2d2d2d;color:#d3d0c8;">;
-    }
-    </span><span style="background-color:#2d2d2d;color:#66cccc;">printf</span><span style="background-color:#2d2d2d;color:#d3d0c8;">(&quot;</span><span style="background-color:#2d2d2d;color:#99cc99;">Failed to add element to array</span><span style="background-color:#2d2d2d;color:#66cccc;">\n</span><span style="background-color:#2d2d2d;color:#d3d0c8;">&quot;);
-    </span><span style="background-color:#2d2d2d;color:#cc99cc;">return </span><span style="background-color:#2d2d2d;color:#f99157;">1</span><span style="background-color:#2d2d2d;color:#d3d0c8;">;
 }
 </span></pre>
 <p>The <code>else if</code> pattern is works out ok for a few calls in but it breaks down a bit when you need to set variables or make standalone calls like our call to lock &amp; unlock the mutex, or to allocate memory for the global data array if needed.</p>
