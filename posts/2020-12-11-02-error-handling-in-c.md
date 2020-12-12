@@ -112,4 +112,4 @@ The `else if` pattern is works out ok for a few calls in but it breaks down a bi
 
 With some careful planning and well structured functions, this pattern can be quite effective, but it does take a surprising amount of effort.
 
-I used to like the `else if` pattern quite a bit. Nowadays, the `goto done;` pattern is my error handling method of choice. The `goto` pattern is easier to read, write, and maintain.
+I used to like the `else if` pattern quite a bit. Nowadays, the `goto done` pattern is my error handling method of choice. The `goto done` pattern is easier to read, write, and maintain.
