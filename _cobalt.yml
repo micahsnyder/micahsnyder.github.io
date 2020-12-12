@@ -1,3 +1,5 @@
+# Build options
+destination: docs
 
 site:
   title: Micah Snyder's blog

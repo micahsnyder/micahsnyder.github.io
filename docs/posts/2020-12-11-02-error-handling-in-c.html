@@ -35,7 +35,111 @@
 <h2>Multiple <code>return</code>'s</h2>
 <p>Perhaps the most common method for error handling, especially in older C code involves the use of multiple <code>return</code> statements. Allocated memory, thread locks, and other resources are cleaned up as-needed at each <code>return</code>.</p>
 <p>Without further ado, here's our first variant of the example program featuring the &quot;Multiple <code>return</code>s&quot; error handling method:</p>
-<iframe frameborder="0" height="1900px" scrolling="no" src="https://godbolt.org/e?readOnly=true&hideEditorToolbars=true#z:OYLghAFBqRAWIDGB7AJgUwKKoJYBdkAnAGhxAgDNkA7PAZUQEMAbdEARgBZiArD45o2qgA%2BmMTEAzsgCuhRGwDkAegBUAajp4hqRoVTrmOAEaT1q5QFIADAEFLAJgDMOaomYyM6y04DCkvFRjZGRmADo4H0x1GPU1dQAxInVg0PMrO0cXNw8vH39A1zwIqNiY%2BKTCdQBbNHRCanUi9GB69TwATwAHdDMLG3tnV3dPdG8/ANQjYxKnaLKK5OqWZmREZQpCdDH%2BzKGc0fGCwldgWfnYxaqA/Rku9IGs4dyx/MmcZHOy8o1K9S6TrQKA9MnZ4k59ABaLp6TrqAAyJj6GUG2RGeT8XTwcC2jFQ50edk6PQwwJuMkQeG8AHYAEIDMqIOB6czqaiMaroHz0uxlABuyBwBg0um03Me1IAImyOehUCJRYwRHhxaDbPEAOroMCKZjMdQrNaMPBjbFjPSERgddTIYGK/6C2j1MyuJpuLac2hmW3qdjWawg1Gk1xjSW2AAqthEtgASjHbABNES0%2BEAeV8AGkRHQAJIALWifushNsAWNOEQ/2xuPl1RkJoAHsr1IqRBarSJVogANbjaUABXDAAkY5hbJKRABZACq4cwAA0RDmAHI58M52zw/OYGOq0vaPAVmWc%2BWtqmqDTABXGpXt60%2BaXL6fw%2BF7suHyuSHAAL3QzavrZ3iIX6/n26jFk4tJxBodA/mMPp3uoECuugrCengACUgbvkeIF/lSV7UDI1TXtoIioeg6FmA%2B4Hcj86jLsRxhtD6FHoW6BqEJa1q7PYYIXgyGgAALGCc6DArYqAGIwbLoAA7secotje6hsegtDtMg7RwGMwCrMYLCcdxYSCYJ6hCTClrVIp3zqJgaHqVS7KcmZFl6ByynaLZ/aOiaVQENpYxqRpiquVseByI0eCEDIYxlPZlGOeokgUgokiSBQMh6taeIYPiYXoBFDTqBQLCSHFMQJIwOCsAYAW5apDm0CZvK8ak%2BqMF0PTUKeN7kU1eAQCg1ABOoTIshoznoMQ6gCkKrKKlhlh0gysRTb1ZHntQ8n9YlGk0U%2BL57qtMQ4MCECHfCfY0VNNK%2BMtvgMc%2BV0PjRi00jyti2TEAJFBQECOA4uUiOtIhbJSQh6Ww6g5tQfIsPNejAMRjmSGAYCWAArL41CAxhe7feo4WRSVZVcpBJ00pKJYLBoth6kaJoGrJCnkpSmn/PWNqNLIVRGAEYSBmU21ybt7E0csDOIBAeG2hAoNnhh%2BMU7ysRnUhl3XU40oi2LjmQlEU1LStqu2fEqZcz6nK1IQHTo0L32/UCAMOEDUkg7K8rg9owisCAiTVbVHOGkwTPW0Q1pUFUIueTJwV4OjWM43jBPfcTxWlcw5WpzEy3U2qtPqFqLY0DqVLIHJUU6YpM3SIYhU6mYqB3EYodjPggu8cLO3xwbcy3TRNzN108uysrn1lOrF3PVrOs9wNfeYEbH2U4XFvl8C4e2/bXffZs2zy/Pe2YTn3xO3g/2A8DoPe5DfsBzVSn1VLxpjCgXTWj69pTYn2O46749V6xHTo0TO2cVZfViHnGmlwNBah1FsFI6BTjqGADgPk6kbSV2dHAHA9wfRmljrXLScltS6n1DwGQo1GDpRwMAKuYwui%2BXqJ3FE3dRa90NrKMCoUIGU3iPCNYvZCH8ypHXUhY0hDJUYBQVCOUpI2jkCzRqx9WGUyxDidAeIRB1kbJ2IRLsABsgEuIdi7N2QBBdYGrzpl1dSBheaxxUexAKhD7E2mBIQu8LVIGxF3qdc6mtXra1QaRW8piOjGwnt9ACfVEISxDhAMMkZoxxkTMmNMmZszblZLLf6Cs%2Bp4FUErU%2Bk9Akz2CdKWJZE7xRKAbZc%2Bl9XbX09mDdAENfbQyqo/OqWkQ6vxqJRCOJVkj2jvL/ZOADjqm0JiVLY6BD4cIXlwzkljfGzP3gs3W8c1mzOAYVEmYDybRNstAmZZRqnhO4sBOCYFklRljPGJMKZ0xZlzAWU%2BedGrlSaOdQixEwl6y9LPUJJjrl4Tqec2B6hbARKaGYTKeoZr9LDkQMYW8eJsO%2BgUza5gNAmmqF0aZ6yygEvuDRXEUtoCArvDNalYKOx4W8A4KC9zUlPIya87JBYsIaDyaPE8gKiklIgYTKeQTtY0TJZCkljtAQXxdm7eUN92k%2Byhv7bpQcArDFxD8plX8VLjIxn/FOfCoW2U2YsoFeBF5G1KXveZVqdn2tsiA0mWdjn1Kpl6y5bY4VSsokS0VMSaURJuaBRw9IQlsseekl5WT3mYE%2BVKGBMRfV3ixrSf5JFWzx0kFjaUN0j7oVPtmwFebmVRulOwYlhdpzUHMYFQwOBRp12QGafymi8RmCYI0RgiA0ounLm4dFaK1EzI0TWHR9Z0BNhkA2gxjhjFxLDeYtZlM3XRVisdFNdhFAYQECARQmNFDEGoEe6wp7kBHsetIOQChmVOHYKevAF790Hu7Bwf0h7FCcFPeexQl7iDXsUKeyQIBrDEFfYB99xAMGEC/DQEAnAgA%3D%3D%3D"></iframe>
+<pre style="background-color:#2d2d2d;">
+<span style="background-color:#2d2d2d;color:#747369;">/* Standard libs */</span><span style="background-color:#2d2d2d;color:#d3d0c8;">
+#include &lt;stdbool.</span><span style="background-color:#2d2d2d;color:#f2777a;">h</span><span style="background-color:#2d2d2d;color:#d3d0c8;">&gt;    </span><span style="background-color:#2d2d2d;color:#747369;">/* For bool */</span><span style="background-color:#2d2d2d;color:#d3d0c8;">
+#include &lt;stdint.</span><span style="background-color:#2d2d2d;color:#f2777a;">h</span><span style="background-color:#2d2d2d;color:#d3d0c8;">&gt;     </span><span style="background-color:#2d2d2d;color:#747369;">/* For modern integer types */</span><span style="background-color:#2d2d2d;color:#d3d0c8;">
+#include &lt;stdlib.</span><span style="background-color:#2d2d2d;color:#f2777a;">h</span><span style="background-color:#2d2d2d;color:#d3d0c8;">&gt;     </span><span style="background-color:#2d2d2d;color:#747369;">/* For malloc/free */</span><span style="background-color:#2d2d2d;color:#d3d0c8;">
+#include &lt;string.</span><span style="background-color:#2d2d2d;color:#f2777a;">h</span><span style="background-color:#2d2d2d;color:#d3d0c8;">&gt;     </span><span style="background-color:#2d2d2d;color:#747369;">/* For strdup */</span><span style="background-color:#2d2d2d;color:#d3d0c8;">
+#include &lt;stdio.</span><span style="background-color:#2d2d2d;color:#f2777a;">h</span><span style="background-color:#2d2d2d;color:#d3d0c8;">&gt;      </span><span style="background-color:#2d2d2d;color:#747369;">/* For printf */
+
+/* 3rd-party Libs */</span><span style="background-color:#2d2d2d;color:#d3d0c8;">
+#include &lt;pthread.</span><span style="background-color:#2d2d2d;color:#f2777a;">h</span><span style="background-color:#2d2d2d;color:#d3d0c8;">&gt;
+
+</span><span style="background-color:#2d2d2d;color:#cc99cc;">typedef struct </span><span style="background-color:#2d2d2d;color:#d3d0c8;">{
+    </span><span style="background-color:#2d2d2d;color:#cc99cc;">char </span><span style="background-color:#2d2d2d;color:#d3d0c8;">* name;
+    </span><span style="background-color:#2d2d2d;color:#cc99cc;">void </span><span style="background-color:#2d2d2d;color:#d3d0c8;">* data;
+} named_data_t;
+
+</span><span style="background-color:#2d2d2d;color:#747369;">/* We&#39;ll allocate the array of data pointers in increments of 100 */</span><span style="background-color:#2d2d2d;color:#d3d0c8;">
+#define DATA_ARRAY_BLOCK_SIZE </span><span style="background-color:#2d2d2d;color:#f99157;">100
+
+</span><span style="background-color:#2d2d2d;color:#cc99cc;">static </span><span style="background-color:#2d2d2d;color:#d3d0c8;">pthread_mutex_t data_array_lock = PTHREAD_MUTEX_INITIALIZER;
+</span><span style="background-color:#2d2d2d;color:#cc99cc;">static</span><span style="background-color:#2d2d2d;color:#d3d0c8;"> named_data_t ** g_data_array = </span><span style="background-color:#2d2d2d;color:#f99157;">NULL</span><span style="background-color:#2d2d2d;color:#d3d0c8;">;
+</span><span style="background-color:#2d2d2d;color:#cc99cc;">static </span><span style="background-color:#2d2d2d;color:#d3d0c8;">size_t g_data_array_size = </span><span style="background-color:#2d2d2d;color:#f99157;">0</span><span style="background-color:#2d2d2d;color:#d3d0c8;">;    </span><span style="background-color:#2d2d2d;color:#747369;">/* Size of array (in element) */
+</span><span style="background-color:#2d2d2d;color:#cc99cc;">static </span><span style="background-color:#2d2d2d;color:#d3d0c8;">size_t g_num_data_elements = </span><span style="background-color:#2d2d2d;color:#f99157;">0</span><span style="background-color:#2d2d2d;color:#d3d0c8;">;  </span><span style="background-color:#2d2d2d;color:#747369;">/* Number of element in array */
+
+/**
+ * @brief Add a new named data element to the global array.
+ *
+ * @param name      Element name
+ * @param data      Pointer to the element data
+ * @return true     Element successfully added.
+ * @return false    Failed to add element.
+ */
+</span><span style="background-color:#2d2d2d;color:#cc99cc;">bool </span><span style="background-color:#2d2d2d;color:#6699cc;">append_data_element</span><span style="background-color:#2d2d2d;color:#d3d0c8;">(</span><span style="background-color:#2d2d2d;color:#cc99cc;">const char </span><span style="background-color:#2d2d2d;color:#d3d0c8;">* name, </span><span style="background-color:#2d2d2d;color:#cc99cc;">void </span><span style="background-color:#2d2d2d;color:#d3d0c8;">* data) {
+    named_data_t *new_element = </span><span style="background-color:#2d2d2d;color:#f99157;">NULL</span><span style="background-color:#2d2d2d;color:#d3d0c8;">;
+
+    </span><span style="background-color:#2d2d2d;color:#cc99cc;">if </span><span style="background-color:#2d2d2d;color:#d3d0c8;">(</span><span style="background-color:#2d2d2d;color:#f99157;">NULL </span><span style="background-color:#2d2d2d;color:#d3d0c8;">== name || </span><span style="background-color:#2d2d2d;color:#f99157;">NULL </span><span style="background-color:#2d2d2d;color:#d3d0c8;">== data) {
+        </span><span style="background-color:#2d2d2d;color:#747369;">/* Bad args! */
+        </span><span style="background-color:#2d2d2d;color:#66cccc;">printf</span><span style="background-color:#2d2d2d;color:#d3d0c8;">(&quot;</span><span style="background-color:#2d2d2d;color:#99cc99;">add_named_rectangle: Invalid arguments!</span><span style="background-color:#2d2d2d;color:#66cccc;">\n</span><span style="background-color:#2d2d2d;color:#d3d0c8;">&quot;);
+        </span><span style="background-color:#2d2d2d;color:#cc99cc;">return </span><span style="background-color:#2d2d2d;color:#f99157;">false</span><span style="background-color:#2d2d2d;color:#d3d0c8;">;
+    }
+
+    </span><span style="background-color:#2d2d2d;color:#747369;">/* Allocate a new struct to put on our array. */</span><span style="background-color:#2d2d2d;color:#d3d0c8;">
+    new_element = </span><span style="background-color:#2d2d2d;color:#66cccc;">malloc</span><span style="background-color:#2d2d2d;color:#d3d0c8;">(sizeof(named_data_t));
+    </span><span style="background-color:#2d2d2d;color:#cc99cc;">if </span><span style="background-color:#2d2d2d;color:#d3d0c8;">(</span><span style="background-color:#2d2d2d;color:#f99157;">NULL </span><span style="background-color:#2d2d2d;color:#d3d0c8;">== new_element) {
+        </span><span style="background-color:#2d2d2d;color:#747369;">/* Out of memory! */
+        </span><span style="background-color:#2d2d2d;color:#cc99cc;">return </span><span style="background-color:#2d2d2d;color:#f99157;">false</span><span style="background-color:#2d2d2d;color:#d3d0c8;">;
+    }
+
+    </span><span style="background-color:#2d2d2d;color:#747369;">/* We don&#39;t own the name, so let&#39;s duplicate it. */</span><span style="background-color:#2d2d2d;color:#d3d0c8;">
+    new_element-&gt;name = </span><span style="background-color:#2d2d2d;color:#6699cc;">strdup</span><span style="background-color:#2d2d2d;color:#d3d0c8;">(name);
+    </span><span style="background-color:#2d2d2d;color:#cc99cc;">if </span><span style="background-color:#2d2d2d;color:#d3d0c8;">(</span><span style="background-color:#2d2d2d;color:#f99157;">NULL </span><span style="background-color:#2d2d2d;color:#d3d0c8;">== new_element-&gt;name) {
+        </span><span style="background-color:#2d2d2d;color:#747369;">/* Out of memory! */
+        </span><span style="background-color:#2d2d2d;color:#66cccc;">free</span><span style="background-color:#2d2d2d;color:#d3d0c8;">(new_element);
+        </span><span style="background-color:#2d2d2d;color:#cc99cc;">return </span><span style="background-color:#2d2d2d;color:#f99157;">false</span><span style="background-color:#2d2d2d;color:#d3d0c8;">;
+    }
+
+    </span><span style="background-color:#2d2d2d;color:#747369;">/* We&#39;re being given ownership of the data, so we&#39;ll just assign the pointer. */</span><span style="background-color:#2d2d2d;color:#d3d0c8;">
+    new_element-&gt;name = data;
+
+    </span><span style="background-color:#2d2d2d;color:#747369;">/* Lock the array so we can safely add our new element. */
+    </span><span style="background-color:#2d2d2d;color:#6699cc;">pthread_mutex_lock</span><span style="background-color:#2d2d2d;color:#d3d0c8;">(&amp;data_array_lock);
+
+    </span><span style="background-color:#2d2d2d;color:#747369;">/*
+     * Append our data element to the end of the array.
+     */
+    </span><span style="background-color:#2d2d2d;color:#cc99cc;">if </span><span style="background-color:#2d2d2d;color:#d3d0c8;">(</span><span style="background-color:#2d2d2d;color:#f99157;">NULL </span><span style="background-color:#2d2d2d;color:#d3d0c8;">== g_data_array) {
+        </span><span style="background-color:#2d2d2d;color:#747369;">/* Array doesn&#39;t exist, let&#39;s allocate it */</span><span style="background-color:#2d2d2d;color:#d3d0c8;">
+
+        g_data_array = </span><span style="background-color:#2d2d2d;color:#66cccc;">malloc</span><span style="background-color:#2d2d2d;color:#d3d0c8;">(DATA_ARRAY_BLOCK_SIZE * sizeof(named_data_t*));
+        </span><span style="background-color:#2d2d2d;color:#cc99cc;">if </span><span style="background-color:#2d2d2d;color:#d3d0c8;">(</span><span style="background-color:#2d2d2d;color:#f99157;">NULL </span><span style="background-color:#2d2d2d;color:#d3d0c8;">== g_data_array) {
+            </span><span style="background-color:#2d2d2d;color:#747369;">/* Failed to allocate memory for data array! */
+            </span><span style="background-color:#2d2d2d;color:#66cccc;">free</span><span style="background-color:#2d2d2d;color:#d3d0c8;">(new_element-&gt;name);
+            </span><span style="background-color:#2d2d2d;color:#66cccc;">free</span><span style="background-color:#2d2d2d;color:#d3d0c8;">(new_element);
+            </span><span style="background-color:#2d2d2d;color:#cc99cc;">return </span><span style="background-color:#2d2d2d;color:#f99157;">false</span><span style="background-color:#2d2d2d;color:#d3d0c8;">;
+        }
+
+        g_data_array_size = DATA_ARRAY_BLOCK_SIZE;
+
+    } </span><span style="background-color:#2d2d2d;color:#cc99cc;">else if </span><span style="background-color:#2d2d2d;color:#d3d0c8;">(g_num_data_elements == g_data_array_size) {
+        </span><span style="background-color:#2d2d2d;color:#747369;">/* Array is full, allocate more memory */</span><span style="background-color:#2d2d2d;color:#d3d0c8;">
+        named_data_t ** temp;
+
+        temp = </span><span style="background-color:#2d2d2d;color:#66cccc;">realloc</span><span style="background-color:#2d2d2d;color:#d3d0c8;">(g_data_array, (g_data_array_size + DATA_ARRAY_BLOCK_SIZE) * sizeof(named_data_t*));
+        </span><span style="background-color:#2d2d2d;color:#cc99cc;">if </span><span style="background-color:#2d2d2d;color:#d3d0c8;">(</span><span style="background-color:#2d2d2d;color:#f99157;">NULL </span><span style="background-color:#2d2d2d;color:#d3d0c8;">== temp) {
+            </span><span style="background-color:#2d2d2d;color:#747369;">/* Failed to increase size of data array! */
+            </span><span style="background-color:#2d2d2d;color:#66cccc;">free</span><span style="background-color:#2d2d2d;color:#d3d0c8;">(new_element-&gt;name);
+            </span><span style="background-color:#2d2d2d;color:#66cccc;">free</span><span style="background-color:#2d2d2d;color:#d3d0c8;">(new_element);
+            </span><span style="background-color:#2d2d2d;color:#cc99cc;">return </span><span style="background-color:#2d2d2d;color:#f99157;">false</span><span style="background-color:#2d2d2d;color:#d3d0c8;">;
+        }
+
+        g_data_array = temp;
+        g_data_array_size += DATA_ARRAY_BLOCK_SIZE;
+    }
+
+    g_data_array[g_num_data_elements] = new_element;
+    g_num_data_elements += </span><span style="background-color:#2d2d2d;color:#f99157;">1</span><span style="background-color:#2d2d2d;color:#d3d0c8;">;
+
+    </span><span style="background-color:#2d2d2d;color:#747369;">/* Unlock the array so other threads can access it once more. */
+    </span><span style="background-color:#2d2d2d;color:#6699cc;">pthread_mutex_unlock</span><span style="background-color:#2d2d2d;color:#d3d0c8;">(&amp;data_array_lock);
+
+    </span><span style="background-color:#2d2d2d;color:#66cccc;">printf</span><span style="background-color:#2d2d2d;color:#d3d0c8;">(&quot;</span><span style="background-color:#2d2d2d;color:#99cc99;">add_named_rectangle: Added &#39;</span><span style="background-color:#2d2d2d;color:#f99157;">%s</span><span style="background-color:#2d2d2d;color:#99cc99;">&#39; element to data array!</span><span style="background-color:#2d2d2d;color:#66cccc;">\n</span><span style="background-color:#2d2d2d;color:#d3d0c8;">&quot;, name);
+
+    </span><span style="background-color:#2d2d2d;color:#cc99cc;">return </span><span style="background-color:#2d2d2d;color:#f99157;">true</span><span style="background-color:#2d2d2d;color:#d3d0c8;">;
+}
+</span></pre>
 <p>As you review the above example, note how much duplicate code exists for resource cleanup during error handling. Can you see how easy it would be to forget to clean up a malloced pointer or a locked mutex. This is a recipe for disaster!</p>
 <h2>The <code>do { ... } while(0)</code></h2>
 <p>Another surprisingly popular option for error handling in C is to wrap all function code in a big ol' <code>do { ... } while(0);</code> &quot;loop&quot;.</p>
@@ -44,7 +148,119 @@
 <p>Secondly, it's confusing. To the novice programmer, this approach for error handling is non-obvious because it abuses the do-while looping construct to perform a completely different task. An experienced programmer may appreciate such cleverness but the simple fact is that code which is hard to read is hard to maintain and increases the barrier to entry for novice programmers with little if any real benefit.</p>
 <p>Additionally, I think the extra indentation of the  <code>do { ... } while(0);</code> is harder to read.</p>
 <p>Here's our example using the do-while method:</p>
-<iframe frameborder="0" height="2110px" scrolling="no" src="https://godbolt.org/e?readOnly=true&hideEditorToolbars=true#z:OYLghAFBqRAWIDGB7AJgUwKKoJYBdkAnAGhxAgDNkA7PAZUQEMAbdEARgBZiArD45o2qgA%2BmMTEAzsgCuhRGwDkAegBUAajp4hqRoVTrmOAEaT1q5QFIADAEFLAJgDMOaomYyM6y04DCkvFRjZGRmADo4H0x1GPU1dQAxInVg0PMrO0cXNw8vH39A1zwIqNiY%2BKTCdQBbNHRCanUi9GB69TwATwAHdDMLG3tnV3dPdG8/ANQjYxKnaLKK5OqWZmREZQpCdDH%2BzKGc0fGCwldgWfnYxaqA/Rku9IGs4dyx/MmcZHOy8o1K9S6TrQKA9MnZ4k59ABaLp6TrqAAyJj6GUG2RGeT8XTwcC2jFQ50edk6PQwwJuMkQeG8AHYAEIDMqIOB6czqaiMaroHz0uxlABuyBwBg0um03Me1IAImyOehUCJRYwRHhxaDbPEAOroMCKZjMdQrNaMPBjbFjPSERgddTIYGK/6C2j1MyuJpuLac2hmW3qdjWawg1Gk1xjSW2AAqthEtgASjHbABNES0%2BEAeV8AGkRHQAJIALWifushNsAWNOEQ/2xuPl1RkJoAHsr1IqRBarSJVogANbjaUABXDAAkY5hbJKRABZACq4cwAA0RDmAHI58M52zw/OYGOq0vaPAVmWc%2BWtqmqDTABXGpXt60%2BaXL6fw%2BF7suHyuSHAAL3QzavrZ3iIX6/n26jFk4tILBodA/mMPp3uoECuugrCengACUgbvkeIF/lSV7UDI1TXtoIioeg6FmA%2B4Hcj86jLsRxhtD6FHoW6BqEJa1q7PYYIXgyGgAALGCc6DArYqAGIwbLoAA7secotje6hsegtDtMg7RwGMwCrMYLCcdxYSCYJ6hCTClrVIp3zqJgaHqVS7KcmZFl6ByynaLZ/aOiaVQENpYxqRpiquVseByI0eCEDIYxlPZlGOeokgUgokiSBQMh6taeIYPiYXoBFDTqBQLCSHFMQJIwOCsAYAW5apDm0CZvK8ak%2BqMF0PTUKeN7kU1eAQCg1ABOoTIshoznoMQ6gCkKrKKlhlh0gysTtclB4yNRTjSqVzDlXuZRTb1ZHntQ8n9YlGk0U%2BL57qtMSoFpy08rYtkxDgwIQLd8J9jRU00r4y2%2BAxz6/Q%2BNGLTSr3vd88S0ninHAJIYBgIGsNlKJ6CMN2h3vctkolrD8S2HqRomgaskKeSlKaf89Y2o0shVHeYTo%2B951yZd7E0csZOIBAeG2hAx2kUqmEYXjtmfUhP1/TtVPc45S0rbyGP0amDM%2BpytSEB0qPs%2BrWM41L3wE0T72amMT3UDqVLIHJUU6YpM3SIYhU6mYqB3EYTAU/gbO8bDnNK7QkJRADNE3N7XQi7KkuQQ93wy99YPy9KIfBXg4dzFNKsw%2BrcQaJr9vAjrRD62jQeF8buOJ2rtnm2qxMaFqOpbCk6CnOowA4Hy6k2o7zpwDg9w%2BmanmMK7Wlydqur6jwW1Uow6U4MATtjF0vn1IHKLBxdWc55gkcK6F9d8W9lsaPCay9hPiFu7PY1CMljAUKhOVSTachU41V3FIbb4WIcTY1rPWdATYuzdggI4AAbIBLiHYoEJ1eknaCaCygaFsF1dSBhmaTz/uxAKE9cE2mBPfRBHQWqX3etXaWX05YQwVgBPqd584YNsiTShLZkC9FtooKkECcABBmqwPAnsDT82NGMfAgYOHfBYWRRCvNDQCzDJGaMcZEzJjTJmbM25WRCwoHHE8YtlSqAwig%2BRZQU6MJ2jRRRt5KHsIboXeiVUapKXqlIim5c9YlWSPaO8Bs6FuKrCAvEIg6yNhEDIagUCYEOHgawyhnZb4oPoqjA2WoNo1X1MyfudM4lQMCjUcBDZO5UA7k/WugC3G11NrDJuF83GOLbKkvCYF1FRljPGJMKZ0xZlzAWe6riygE0auVJoX1CLETMVnbahNmFmKAnhFxNCMZcO4k0MwmU9QzVUdImoRAxh%2BJ4nvQuoszzmA0CaaoXRRkbNhnc%2B4NFcT82gCsyhM1PkIO4sBOC3gHBQW6ZovpOjBn6ILFhDQRiTFyjMXgCxVixnvVsWnJh0oXnrLCZcX41Vap02GLiKZnSfRBMoSEi5uLgE1iieU2J8Tb6JOSUo1JyC6JF3UFktGOSAh5PUAU00Wlim31KdEiBlSTnqBqbiXsoT6lysafjKU1jYhtOUQrF5yrbIao6YCxw9IFagt6dogZejhmYB1TSQmzd3p6u4pYAArLSWZJFWwLOddKf6B8BrWrdfMga1FgU0XYI8lu6hpxMp7KUh%2BWlkBmn8hE1AZgmCNEYIgNKLp7ZuFOSc3e8jaWgPpTE0VPYWV/KQek8NV9NCpV6CjKu1Lvjvi2mBaKsVTYTLkiPVgEBrAopabEFOe0pmYo2saLaOK0UMLTqjH1XMs7TvVuil83KwALtDtnCO8doZqtspsbYItfX/yPnna14zVWooPVsdAx7F0DUHU0q9GzmlJ3CpFCdEVJD3SlIoDCAgQCKCdYoYg1AgPWFA8gIDINpByAUECpw7BQN4Ag/%2BgD3YOD%2BkA4oTgoHwOKEg8QaDihQOSBANYYgqHCPoeIP3QgX4aAgE4EAA"></iframe>
+<pre style="background-color:#2d2d2d;">
+<span style="background-color:#2d2d2d;color:#747369;">/* Standard libs */</span><span style="background-color:#2d2d2d;color:#d3d0c8;">
+#include &lt;stdbool.</span><span style="background-color:#2d2d2d;color:#f2777a;">h</span><span style="background-color:#2d2d2d;color:#d3d0c8;">&gt;    </span><span style="background-color:#2d2d2d;color:#747369;">/* For bool */</span><span style="background-color:#2d2d2d;color:#d3d0c8;">
+#include &lt;stdint.</span><span style="background-color:#2d2d2d;color:#f2777a;">h</span><span style="background-color:#2d2d2d;color:#d3d0c8;">&gt;     </span><span style="background-color:#2d2d2d;color:#747369;">/* For modern integer types */</span><span style="background-color:#2d2d2d;color:#d3d0c8;">
+#include &lt;stdlib.</span><span style="background-color:#2d2d2d;color:#f2777a;">h</span><span style="background-color:#2d2d2d;color:#d3d0c8;">&gt;     </span><span style="background-color:#2d2d2d;color:#747369;">/* For malloc/free */</span><span style="background-color:#2d2d2d;color:#d3d0c8;">
+#include &lt;string.</span><span style="background-color:#2d2d2d;color:#f2777a;">h</span><span style="background-color:#2d2d2d;color:#d3d0c8;">&gt;     </span><span style="background-color:#2d2d2d;color:#747369;">/* For strdup */</span><span style="background-color:#2d2d2d;color:#d3d0c8;">
+#include &lt;stdio.</span><span style="background-color:#2d2d2d;color:#f2777a;">h</span><span style="background-color:#2d2d2d;color:#d3d0c8;">&gt;      </span><span style="background-color:#2d2d2d;color:#747369;">/* For printf */
+
+/* 3rd-party Libs */</span><span style="background-color:#2d2d2d;color:#d3d0c8;">
+#include &lt;pthread.</span><span style="background-color:#2d2d2d;color:#f2777a;">h</span><span style="background-color:#2d2d2d;color:#d3d0c8;">&gt;
+
+</span><span style="background-color:#2d2d2d;color:#cc99cc;">typedef struct </span><span style="background-color:#2d2d2d;color:#d3d0c8;">{
+    </span><span style="background-color:#2d2d2d;color:#cc99cc;">char </span><span style="background-color:#2d2d2d;color:#d3d0c8;">* name;
+    </span><span style="background-color:#2d2d2d;color:#cc99cc;">void </span><span style="background-color:#2d2d2d;color:#d3d0c8;">* data;
+} named_data_t;
+
+</span><span style="background-color:#2d2d2d;color:#747369;">/* We&#39;ll allocate the array of data pointers in increments of 100 */</span><span style="background-color:#2d2d2d;color:#d3d0c8;">
+#define DATA_ARRAY_BLOCK_SIZE </span><span style="background-color:#2d2d2d;color:#f99157;">100
+
+</span><span style="background-color:#2d2d2d;color:#cc99cc;">static </span><span style="background-color:#2d2d2d;color:#d3d0c8;">pthread_mutex_t data_array_lock = PTHREAD_MUTEX_INITIALIZER;
+</span><span style="background-color:#2d2d2d;color:#cc99cc;">static</span><span style="background-color:#2d2d2d;color:#d3d0c8;"> named_data_t ** g_data_array = </span><span style="background-color:#2d2d2d;color:#f99157;">NULL</span><span style="background-color:#2d2d2d;color:#d3d0c8;">;
+</span><span style="background-color:#2d2d2d;color:#cc99cc;">static </span><span style="background-color:#2d2d2d;color:#d3d0c8;">size_t g_data_array_size = </span><span style="background-color:#2d2d2d;color:#f99157;">0</span><span style="background-color:#2d2d2d;color:#d3d0c8;">;    </span><span style="background-color:#2d2d2d;color:#747369;">/* Size of array (in element) */
+</span><span style="background-color:#2d2d2d;color:#cc99cc;">static </span><span style="background-color:#2d2d2d;color:#d3d0c8;">size_t g_num_data_elements = </span><span style="background-color:#2d2d2d;color:#f99157;">0</span><span style="background-color:#2d2d2d;color:#d3d0c8;">;  </span><span style="background-color:#2d2d2d;color:#747369;">/* Number of element in array */
+
+/**
+ * @brief Add a new named data element to the global array.
+ *
+ * @param name      Element name
+ * @param data      Pointer to the element data
+ * @return true     Element successfully added.
+ * @return false    Failed to add element.
+ */
+</span><span style="background-color:#2d2d2d;color:#cc99cc;">bool </span><span style="background-color:#2d2d2d;color:#6699cc;">append_data_element</span><span style="background-color:#2d2d2d;color:#d3d0c8;">(</span><span style="background-color:#2d2d2d;color:#cc99cc;">const char </span><span style="background-color:#2d2d2d;color:#d3d0c8;">* name, </span><span style="background-color:#2d2d2d;color:#cc99cc;">void </span><span style="background-color:#2d2d2d;color:#d3d0c8;">* data) {
+    </span><span style="background-color:#2d2d2d;color:#cc99cc;">bool</span><span style="background-color:#2d2d2d;color:#d3d0c8;"> status = </span><span style="background-color:#2d2d2d;color:#f99157;">false</span><span style="background-color:#2d2d2d;color:#d3d0c8;">;
+    named_data_t *new_element = </span><span style="background-color:#2d2d2d;color:#f99157;">NULL</span><span style="background-color:#2d2d2d;color:#d3d0c8;">;
+
+    </span><span style="background-color:#2d2d2d;color:#cc99cc;">do </span><span style="background-color:#2d2d2d;color:#d3d0c8;">{
+        </span><span style="background-color:#2d2d2d;color:#cc99cc;">if </span><span style="background-color:#2d2d2d;color:#d3d0c8;">(</span><span style="background-color:#2d2d2d;color:#f99157;">NULL </span><span style="background-color:#2d2d2d;color:#d3d0c8;">== name || </span><span style="background-color:#2d2d2d;color:#f99157;">NULL </span><span style="background-color:#2d2d2d;color:#d3d0c8;">== data) {
+            </span><span style="background-color:#2d2d2d;color:#747369;">/* Bad args! */
+            </span><span style="background-color:#2d2d2d;color:#cc99cc;">break</span><span style="background-color:#2d2d2d;color:#d3d0c8;">;
+        }
+
+        </span><span style="background-color:#2d2d2d;color:#747369;">/* Allocate a new struct to put on our array. */</span><span style="background-color:#2d2d2d;color:#d3d0c8;">
+        new_element = </span><span style="background-color:#2d2d2d;color:#66cccc;">malloc</span><span style="background-color:#2d2d2d;color:#d3d0c8;">(sizeof(named_data_t));
+        </span><span style="background-color:#2d2d2d;color:#cc99cc;">if </span><span style="background-color:#2d2d2d;color:#d3d0c8;">(</span><span style="background-color:#2d2d2d;color:#f99157;">NULL </span><span style="background-color:#2d2d2d;color:#d3d0c8;">== new_element) {
+            </span><span style="background-color:#2d2d2d;color:#747369;">/* Out of memory! */
+            </span><span style="background-color:#2d2d2d;color:#cc99cc;">break</span><span style="background-color:#2d2d2d;color:#d3d0c8;">;
+        }
+
+        </span><span style="background-color:#2d2d2d;color:#747369;">/* We don&#39;t own the name, so let&#39;s duplicate it. */</span><span style="background-color:#2d2d2d;color:#d3d0c8;">
+        new_element-&gt;name = </span><span style="background-color:#2d2d2d;color:#6699cc;">strdup</span><span style="background-color:#2d2d2d;color:#d3d0c8;">(name);
+        </span><span style="background-color:#2d2d2d;color:#cc99cc;">if </span><span style="background-color:#2d2d2d;color:#d3d0c8;">(</span><span style="background-color:#2d2d2d;color:#f99157;">NULL </span><span style="background-color:#2d2d2d;color:#d3d0c8;">== new_element-&gt;name) {
+            </span><span style="background-color:#2d2d2d;color:#747369;">/* Out of memory! */
+            </span><span style="background-color:#2d2d2d;color:#cc99cc;">break</span><span style="background-color:#2d2d2d;color:#d3d0c8;">;
+        }
+
+        </span><span style="background-color:#2d2d2d;color:#747369;">/* We&#39;re being given ownership of the data, so we&#39;ll just assign the pointer. */</span><span style="background-color:#2d2d2d;color:#d3d0c8;">
+        new_element-&gt;name = data;
+
+        </span><span style="background-color:#2d2d2d;color:#747369;">/* Lock the array so we can safely add our new element. */
+        </span><span style="background-color:#2d2d2d;color:#6699cc;">pthread_mutex_lock</span><span style="background-color:#2d2d2d;color:#d3d0c8;">(&amp;data_array_lock);
+
+        </span><span style="background-color:#2d2d2d;color:#747369;">/*
+         * Append our data element to the end of the array.
+         */
+        </span><span style="background-color:#2d2d2d;color:#cc99cc;">if </span><span style="background-color:#2d2d2d;color:#d3d0c8;">(</span><span style="background-color:#2d2d2d;color:#f99157;">NULL </span><span style="background-color:#2d2d2d;color:#d3d0c8;">== g_data_array) {
+            </span><span style="background-color:#2d2d2d;color:#747369;">/* Array doesn&#39;t exist, let&#39;s allocate it */</span><span style="background-color:#2d2d2d;color:#d3d0c8;">
+
+            g_data_array = </span><span style="background-color:#2d2d2d;color:#66cccc;">malloc</span><span style="background-color:#2d2d2d;color:#d3d0c8;">(DATA_ARRAY_BLOCK_SIZE * sizeof(named_data_t*));
+            </span><span style="background-color:#2d2d2d;color:#cc99cc;">if </span><span style="background-color:#2d2d2d;color:#d3d0c8;">(</span><span style="background-color:#2d2d2d;color:#f99157;">NULL </span><span style="background-color:#2d2d2d;color:#d3d0c8;">== g_data_array) {
+                </span><span style="background-color:#2d2d2d;color:#747369;">/* Failed to allocate memory for data array! */
+                </span><span style="background-color:#2d2d2d;color:#6699cc;">pthread_mutex_unlock</span><span style="background-color:#2d2d2d;color:#d3d0c8;">(&amp;data_array_lock);  </span><span style="background-color:#2d2d2d;color:#747369;">/* !! We still have to unlock the mutex before we break */
+                </span><span style="background-color:#2d2d2d;color:#cc99cc;">break</span><span style="background-color:#2d2d2d;color:#d3d0c8;">;
+            }
+
+            g_data_array_size = DATA_ARRAY_BLOCK_SIZE;
+
+        } </span><span style="background-color:#2d2d2d;color:#cc99cc;">else if </span><span style="background-color:#2d2d2d;color:#d3d0c8;">(g_num_data_elements == g_data_array_size) {
+            </span><span style="background-color:#2d2d2d;color:#747369;">/* Array is full, allocate more memory */</span><span style="background-color:#2d2d2d;color:#d3d0c8;">
+            named_data_t ** temp;
+
+            temp = </span><span style="background-color:#2d2d2d;color:#66cccc;">realloc</span><span style="background-color:#2d2d2d;color:#d3d0c8;">(g_data_array, (g_data_array_size + DATA_ARRAY_BLOCK_SIZE) * sizeof(named_data_t*));
+            </span><span style="background-color:#2d2d2d;color:#cc99cc;">if </span><span style="background-color:#2d2d2d;color:#d3d0c8;">(</span><span style="background-color:#2d2d2d;color:#f99157;">NULL </span><span style="background-color:#2d2d2d;color:#d3d0c8;">== temp) {
+                </span><span style="background-color:#2d2d2d;color:#747369;">/* Failed to increase size of data array! */
+                </span><span style="background-color:#2d2d2d;color:#6699cc;">pthread_mutex_unlock</span><span style="background-color:#2d2d2d;color:#d3d0c8;">(&amp;data_array_lock);  </span><span style="background-color:#2d2d2d;color:#747369;">/* !! We still have to unlock the mutex before we break */
+                </span><span style="background-color:#2d2d2d;color:#cc99cc;">break</span><span style="background-color:#2d2d2d;color:#d3d0c8;">;
+            }
+            g_data_array = temp;
+            g_data_array_size += DATA_ARRAY_BLOCK_SIZE;
+        }
+
+        g_data_array[g_num_data_elements] = new_element;
+        g_num_data_elements += </span><span style="background-color:#2d2d2d;color:#f99157;">1</span><span style="background-color:#2d2d2d;color:#d3d0c8;">;
+
+        </span><span style="background-color:#2d2d2d;color:#747369;">/* Unlock the array so other threads can access it once more. */
+        </span><span style="background-color:#2d2d2d;color:#6699cc;">pthread_mutex_unlock</span><span style="background-color:#2d2d2d;color:#d3d0c8;">(&amp;data_array_lock);
+
+        </span><span style="background-color:#2d2d2d;color:#747369;">/* Success! */</span><span style="background-color:#2d2d2d;color:#d3d0c8;">
+        status = </span><span style="background-color:#2d2d2d;color:#f99157;">true</span><span style="background-color:#2d2d2d;color:#d3d0c8;">;
+    } </span><span style="background-color:#2d2d2d;color:#cc99cc;">while</span><span style="background-color:#2d2d2d;color:#d3d0c8;">(</span><span style="background-color:#2d2d2d;color:#f99157;">0</span><span style="background-color:#2d2d2d;color:#d3d0c8;">);
+
+    </span><span style="background-color:#2d2d2d;color:#cc99cc;">if </span><span style="background-color:#2d2d2d;color:#d3d0c8;">(</span><span style="background-color:#2d2d2d;color:#f99157;">false </span><span style="background-color:#2d2d2d;color:#d3d0c8;">== status) {
+        </span><span style="background-color:#2d2d2d;color:#cc99cc;">if </span><span style="background-color:#2d2d2d;color:#d3d0c8;">(</span><span style="background-color:#2d2d2d;color:#f99157;">NULL </span><span style="background-color:#2d2d2d;color:#d3d0c8;">!= new_element) {
+            </span><span style="background-color:#2d2d2d;color:#cc99cc;">if </span><span style="background-color:#2d2d2d;color:#d3d0c8;">(</span><span style="background-color:#2d2d2d;color:#f99157;">NULL </span><span style="background-color:#2d2d2d;color:#d3d0c8;">!= new_element-&gt;name) {
+                </span><span style="background-color:#2d2d2d;color:#66cccc;">free</span><span style="background-color:#2d2d2d;color:#d3d0c8;">(new_element-&gt;name);
+            }
+            </span><span style="background-color:#2d2d2d;color:#66cccc;">free</span><span style="background-color:#2d2d2d;color:#d3d0c8;">(new_element);
+        }
+    }
+
+    </span><span style="background-color:#2d2d2d;color:#cc99cc;">return</span><span style="background-color:#2d2d2d;color:#d3d0c8;"> status;
+}
+</span></pre>
 <p>But the real reason this method is bad is that it isn't as flexible as using <code>goto</code> for error handling. Here are a couple ways in which the do-while approach to error-handling and resource cleanup breaks down:</p>
 <ol>
 <li>
@@ -63,7 +279,118 @@
 <li>Keep it simple! Multiple labels are cool and may help from time to time, like in our example. But 9 times out of 10 you only need one label. Also, I should have to say this but keep your functions at a reasonable size.  They shouldn't be 1-liners but if they get much larger than a page or two, consider refactoring!</li>
 </ol>
 <p>Here I present to you the example code using the <code>goto</code> method:</p>
-<iframe frameborder="0" height="2110px" scrolling="no" src="https://godbolt.org/e?readOnly=true&hideEditorToolbars=true#z:OYLghAFBqRAWIDGB7AJgUwKKoJYBdkAnAGhxAgDNkA7PAZUQEMAbdEARgBZiArD45o2qgA%2BmMTEAzsgCuhRGwDkAegBUAajp4hqRoVTrmOAEaT1q5QFIADAEFLAJgDMOaomYyM6y04DCkvFRjZGRmADo4H0x1GPU1dQAxInVg0PMrO0cXNw8vH39A1zwIqNiY%2BKTCdQBbNHRCanUi9GB69TwATwAHdDMLG3tnV3dPdG8/ANQjYxKnaLKK5OqWZmREZQpCdDH%2BzKGc0fGCwldgWfnYxaqA/Rku9IGs4dyx/MmcZHOy8o1K9S6TrQKA9MnZ4k59ABaLp6TrqAAyJj6GUG2RGeT8XTwcC2jFQ50edk6PQwwJuMkQeG8AHYAEIDMqIOB6czqaiMaroHz0uxlABuyBwBg0um03Me1IAImyOehUCJRYwRHhxaDbPEAOroMCKZjMdQrNaMPBjbFjPSERgddTIYGK/6C2j1MyuJpuLac2hmW3qdjWawg1Gk1xjSW2AAqthEtgASjHbABNES0%2BEAeV8AGkRHQAJIALWifushNsAWNOEQ/2xuPl1RkJoAHsr1IqRBarSJVogANbjaUABXDAAkY5hbJKRABZACq4cwAA0RDmAHI58M52zw/OYGOq0vaPAVmWc%2BWtqmqDTABXGpXt60%2BaXL6fw%2BF7suHyuSHAAL3QzavrZ3iIX6/n26jFk4tJxBodA/mMPp3uoECuugrCengACUgbvkeIF/lSV7UDI1TXtoIioeg6FmA%2B4Hcj86jLsRxhtD6FHoW6BqEJa1q7PYYIXgyGgAALGCc6DArYqAGIwbLoAA7secotje6hsegtDtMg7RwGMwCrMYLCcdxYSCYJ6hCTClrVIp3zqJgaHqVS7KcmZFl6ByynaLZ/aOiaVQENpYxqRpiquVseByI0eCEDIYxlPZlGOeokgUgokiSBQMh6taeIYPiYXoBFDTqBQLCSHFMQJIwOCsAYAW5apDm0CZvK8ak%2BqMF0PTUKeN7kU1eAQCg1ABOoTIshoznoMQ6gCkKrKKlhlh0gysTtclB4yNRTjSqVzDlXuZRTb1ZHntQ8n9YlGk0U%2BL57qtMQ4MCEC3fCfY0VNNK%2BMtvgMc%2Bb0PjRi00jyti2fRtJ4pxwCSGAYCBuD6jAMgAWoDQXKQQ9NKSiWCwaLYepGiaBqyQp5KUpp/z1jajSyFUd5hAjsTnXJl3sTRyyE4gEB4baEDHaRSqYRhh2xE9SGve9O2k2zjlLStvLg/EqbUz6nK1IQHRw0ztnI6j6OizEy042qePqFqLY0DqVLIHJUU6YpM3SIYhU6mYqB3EYTDE/gjO8UdF3BXgkJRJ9NE3B7XT87KIuY4rj3PZLgPSyzsu0CHcxTfLoOI8rqvAurRBa/D/vg3rWlo%2BdhvY7jlwaFqOpbCk6CnEjOB8upNp286cA4PcPpmp5jBO1pcnarq%2Bo8FtVKMOlODAPbYxdL59R%2ByiAes0HGeYGH0uhXHfFg3XCJrL2g%2BIc7Y9jUIyWMBQqE5VJNpyKTjVXcUOtVji6B4iIdaNp2U%2BEBHAADZAJcQ7F2bssdQZYzUFjVktgurqQMHTIeb92IBUHigm0wJz4QI6C1I%2BsRS4Jwlv9KW0oAJ9TvNnBBx9bAEMtr0ag1tVINhwAEGarA8BuwNFzY0Yx8CBnoTEahZFEIc0NNzMMkZoxxkTMmNMmZszblZLzCg0cTyC2VKoDCMDRFNEThQ5OVCdG0JBoYs2VUapKXqgI4mhdNYlWSPaO82tSGIyRijLSMhqBQOrmUY2tddbmIIcBOCYFZFRljPGJMKZ0xZlzAWe68dsaNXKkYpChFiI6KDttHG0txG3nCXhOhaSzaMO4k0MwmU9QzWkYImoRAxhOJ4uvcGAszzmA0CaaoXRUnEO%2BH0%2B4NFcRc2gGE7iM1JngO4hE0CjgoLRPkXEpRiTVEFiwhoDRWi5Q6LwHogxFSxbGJfJQ9olEujlKGbnX41VaqU2GLiTJeFcHoPcSXDpXjvEBT8QEg%2BiNgknLEVMq0YERmBNiMUtspTIlLJois2JiiEkqOSZgauwLD5lBhXeSwABWWkOSSKtnyQS6UH1A4DWrsSvJA1qIOHpNLdggyzZ0FSr0WGXysbvi2hCmKGNYF2H%2BafEAcCNDTn8afQKRlwXOxRjpfy388RmCYI0RgiA0ouhtm4VpLS15YyxMq2s9Z0BNhFT2YBDgwE0PCVA45h9K5sBCVkygZVXg7XDptSQNzEbixehQuGlLN4DV9T811ksg0pype/beWdLEgq8ZsbY/MY3oTjTHKFtksXhpKlsdAqaQ3vwdUCqUWMsVY3CpFDaxotr3SlIoDCAgQCKHxYoYg1AW3WHbcgFtv1pByAUN4Zw7B214C7Y2pt3YOD%2BmbYoTg7bO2KG7cQXtih22SBANYYg47l2TuIB3QgX4aAgE4EAA%3D%3D%3D"></iframe>
+<pre style="background-color:#2d2d2d;">
+<span style="background-color:#2d2d2d;color:#747369;">/* Standard libs */</span><span style="background-color:#2d2d2d;color:#d3d0c8;">
+#include &lt;stdbool.</span><span style="background-color:#2d2d2d;color:#f2777a;">h</span><span style="background-color:#2d2d2d;color:#d3d0c8;">&gt;    </span><span style="background-color:#2d2d2d;color:#747369;">/* For bool */</span><span style="background-color:#2d2d2d;color:#d3d0c8;">
+#include &lt;stdint.</span><span style="background-color:#2d2d2d;color:#f2777a;">h</span><span style="background-color:#2d2d2d;color:#d3d0c8;">&gt;     </span><span style="background-color:#2d2d2d;color:#747369;">/* For modern integer types */</span><span style="background-color:#2d2d2d;color:#d3d0c8;">
+#include &lt;stdlib.</span><span style="background-color:#2d2d2d;color:#f2777a;">h</span><span style="background-color:#2d2d2d;color:#d3d0c8;">&gt;     </span><span style="background-color:#2d2d2d;color:#747369;">/* For malloc/free */</span><span style="background-color:#2d2d2d;color:#d3d0c8;">
+#include &lt;string.</span><span style="background-color:#2d2d2d;color:#f2777a;">h</span><span style="background-color:#2d2d2d;color:#d3d0c8;">&gt;     </span><span style="background-color:#2d2d2d;color:#747369;">/* For strdup */</span><span style="background-color:#2d2d2d;color:#d3d0c8;">
+#include &lt;stdio.</span><span style="background-color:#2d2d2d;color:#f2777a;">h</span><span style="background-color:#2d2d2d;color:#d3d0c8;">&gt;      </span><span style="background-color:#2d2d2d;color:#747369;">/* For printf */
+
+/* 3rd-party Libs */</span><span style="background-color:#2d2d2d;color:#d3d0c8;">
+#include &lt;pthread.</span><span style="background-color:#2d2d2d;color:#f2777a;">h</span><span style="background-color:#2d2d2d;color:#d3d0c8;">&gt;
+
+</span><span style="background-color:#2d2d2d;color:#cc99cc;">typedef struct </span><span style="background-color:#2d2d2d;color:#d3d0c8;">{
+    </span><span style="background-color:#2d2d2d;color:#cc99cc;">char </span><span style="background-color:#2d2d2d;color:#d3d0c8;">* name;
+    </span><span style="background-color:#2d2d2d;color:#cc99cc;">void </span><span style="background-color:#2d2d2d;color:#d3d0c8;">* data;
+} named_data_t;
+
+</span><span style="background-color:#2d2d2d;color:#747369;">/* We&#39;ll allocate the array of data pointers in increments of 100 */</span><span style="background-color:#2d2d2d;color:#d3d0c8;">
+#define DATA_ARRAY_BLOCK_SIZE </span><span style="background-color:#2d2d2d;color:#f99157;">100
+
+</span><span style="background-color:#2d2d2d;color:#cc99cc;">static </span><span style="background-color:#2d2d2d;color:#d3d0c8;">pthread_mutex_t data_array_lock = PTHREAD_MUTEX_INITIALIZER;
+</span><span style="background-color:#2d2d2d;color:#cc99cc;">static</span><span style="background-color:#2d2d2d;color:#d3d0c8;"> named_data_t ** g_data_array = </span><span style="background-color:#2d2d2d;color:#f99157;">NULL</span><span style="background-color:#2d2d2d;color:#d3d0c8;">;
+</span><span style="background-color:#2d2d2d;color:#cc99cc;">static </span><span style="background-color:#2d2d2d;color:#d3d0c8;">size_t g_data_array_size = </span><span style="background-color:#2d2d2d;color:#f99157;">0</span><span style="background-color:#2d2d2d;color:#d3d0c8;">; </span><span style="background-color:#2d2d2d;color:#747369;">/* Size of array (in element) */
+</span><span style="background-color:#2d2d2d;color:#cc99cc;">static </span><span style="background-color:#2d2d2d;color:#d3d0c8;">size_t g_num_data_elements = </span><span style="background-color:#2d2d2d;color:#f99157;">0</span><span style="background-color:#2d2d2d;color:#d3d0c8;">;  </span><span style="background-color:#2d2d2d;color:#747369;">/* Number of element in array */
+
+/**
+ * @brief Add a new named data element to the global array.
+ *
+ * @param name      Element name
+ * @param data      Pointer to the element data
+ * @return true     Element successfully added.
+ * @return false    Failed to add element.
+ */
+</span><span style="background-color:#2d2d2d;color:#cc99cc;">bool </span><span style="background-color:#2d2d2d;color:#6699cc;">append_data_element</span><span style="background-color:#2d2d2d;color:#d3d0c8;">(</span><span style="background-color:#2d2d2d;color:#cc99cc;">const char </span><span style="background-color:#2d2d2d;color:#d3d0c8;">* name, </span><span style="background-color:#2d2d2d;color:#cc99cc;">void </span><span style="background-color:#2d2d2d;color:#d3d0c8;">* data) {
+    </span><span style="background-color:#2d2d2d;color:#cc99cc;">bool</span><span style="background-color:#2d2d2d;color:#d3d0c8;"> status = </span><span style="background-color:#2d2d2d;color:#f99157;">false</span><span style="background-color:#2d2d2d;color:#d3d0c8;">;
+    named_data_t *new_element = </span><span style="background-color:#2d2d2d;color:#f99157;">NULL</span><span style="background-color:#2d2d2d;color:#d3d0c8;">;
+
+    </span><span style="background-color:#2d2d2d;color:#cc99cc;">if </span><span style="background-color:#2d2d2d;color:#d3d0c8;">(</span><span style="background-color:#2d2d2d;color:#f99157;">NULL </span><span style="background-color:#2d2d2d;color:#d3d0c8;">== name || </span><span style="background-color:#2d2d2d;color:#f99157;">NULL </span><span style="background-color:#2d2d2d;color:#d3d0c8;">== data) {
+        </span><span style="background-color:#2d2d2d;color:#747369;">/* Bad args! */
+        </span><span style="background-color:#2d2d2d;color:#cc99cc;">goto</span><span style="background-color:#2d2d2d;color:#d3d0c8;"> done;
+    }
+
+    </span><span style="background-color:#2d2d2d;color:#747369;">/* Allocate a new struct to put on our array. */</span><span style="background-color:#2d2d2d;color:#d3d0c8;">
+    new_element = </span><span style="background-color:#2d2d2d;color:#66cccc;">malloc</span><span style="background-color:#2d2d2d;color:#d3d0c8;">(sizeof(named_data_t));
+    </span><span style="background-color:#2d2d2d;color:#cc99cc;">if </span><span style="background-color:#2d2d2d;color:#d3d0c8;">(</span><span style="background-color:#2d2d2d;color:#f99157;">NULL </span><span style="background-color:#2d2d2d;color:#d3d0c8;">== new_element) {
+        </span><span style="background-color:#2d2d2d;color:#747369;">/* Out of memory! */
+        </span><span style="background-color:#2d2d2d;color:#cc99cc;">goto</span><span style="background-color:#2d2d2d;color:#d3d0c8;"> done;
+    }
+
+    </span><span style="background-color:#2d2d2d;color:#747369;">/* We don&#39;t own the name, so let&#39;s duplicate it. */</span><span style="background-color:#2d2d2d;color:#d3d0c8;">
+    new_element-&gt;name = </span><span style="background-color:#2d2d2d;color:#6699cc;">strdup</span><span style="background-color:#2d2d2d;color:#d3d0c8;">(name);
+    </span><span style="background-color:#2d2d2d;color:#cc99cc;">if </span><span style="background-color:#2d2d2d;color:#d3d0c8;">(</span><span style="background-color:#2d2d2d;color:#f99157;">NULL </span><span style="background-color:#2d2d2d;color:#d3d0c8;">== new_element-&gt;name) {
+        </span><span style="background-color:#2d2d2d;color:#747369;">/* Out of memory! */
+        </span><span style="background-color:#2d2d2d;color:#cc99cc;">goto</span><span style="background-color:#2d2d2d;color:#d3d0c8;"> done;
+    }
+
+    </span><span style="background-color:#2d2d2d;color:#747369;">/* We&#39;re being given ownership of the data, so we&#39;ll just assign the pointer. */</span><span style="background-color:#2d2d2d;color:#d3d0c8;">
+    new_element-&gt;name = data;
+
+    </span><span style="background-color:#2d2d2d;color:#747369;">/* Lock the array so we can safely add our new element. */
+    </span><span style="background-color:#2d2d2d;color:#6699cc;">pthread_mutex_lock</span><span style="background-color:#2d2d2d;color:#d3d0c8;">(&amp;data_array_lock);
+
+    </span><span style="background-color:#2d2d2d;color:#747369;">/*
+     * Append our data element to the end of the array.
+     */
+    </span><span style="background-color:#2d2d2d;color:#cc99cc;">if </span><span style="background-color:#2d2d2d;color:#d3d0c8;">(</span><span style="background-color:#2d2d2d;color:#f99157;">NULL </span><span style="background-color:#2d2d2d;color:#d3d0c8;">== g_data_array) {
+        </span><span style="background-color:#2d2d2d;color:#747369;">/* Array doesn&#39;t exist, let&#39;s allocate it */</span><span style="background-color:#2d2d2d;color:#d3d0c8;">
+
+        g_data_array = </span><span style="background-color:#2d2d2d;color:#66cccc;">malloc</span><span style="background-color:#2d2d2d;color:#d3d0c8;">(DATA_ARRAY_BLOCK_SIZE * sizeof(named_data_t*));
+        </span><span style="background-color:#2d2d2d;color:#cc99cc;">if </span><span style="background-color:#2d2d2d;color:#d3d0c8;">(</span><span style="background-color:#2d2d2d;color:#f99157;">NULL </span><span style="background-color:#2d2d2d;color:#d3d0c8;">== g_data_array) {
+            </span><span style="background-color:#2d2d2d;color:#747369;">/* Failed to allocate memory for data array! */
+            </span><span style="background-color:#2d2d2d;color:#cc99cc;">goto</span><span style="background-color:#2d2d2d;color:#d3d0c8;"> unlock;
+        }
+
+        g_data_array_size = DATA_ARRAY_BLOCK_SIZE;
+
+    } </span><span style="background-color:#2d2d2d;color:#cc99cc;">else if </span><span style="background-color:#2d2d2d;color:#d3d0c8;">(g_num_data_elements == g_data_array_size) {
+        </span><span style="background-color:#2d2d2d;color:#747369;">/* Array is full, allocate more memory */</span><span style="background-color:#2d2d2d;color:#d3d0c8;">
+        named_data_t ** temp;
+
+        temp = </span><span style="background-color:#2d2d2d;color:#66cccc;">realloc</span><span style="background-color:#2d2d2d;color:#d3d0c8;">(g_data_array, (g_data_array_size + DATA_ARRAY_BLOCK_SIZE) * sizeof(named_data_t*));
+        </span><span style="background-color:#2d2d2d;color:#cc99cc;">if </span><span style="background-color:#2d2d2d;color:#d3d0c8;">(</span><span style="background-color:#2d2d2d;color:#f99157;">NULL </span><span style="background-color:#2d2d2d;color:#d3d0c8;">== temp) {
+            </span><span style="background-color:#2d2d2d;color:#747369;">/* Failed to increase size of data array! */
+            </span><span style="background-color:#2d2d2d;color:#cc99cc;">goto</span><span style="background-color:#2d2d2d;color:#d3d0c8;"> unlock;
+        }
+        g_data_array = temp;
+        g_data_array_size += DATA_ARRAY_BLOCK_SIZE;
+    }
+
+    g_data_array[g_num_data_elements] = new_element;
+    g_num_data_elements += </span><span style="background-color:#2d2d2d;color:#f99157;">1</span><span style="background-color:#2d2d2d;color:#d3d0c8;">;
+
+    </span><span style="background-color:#2d2d2d;color:#747369;">/* Success! */</span><span style="background-color:#2d2d2d;color:#d3d0c8;">
+    status = </span><span style="background-color:#2d2d2d;color:#f99157;">true</span><span style="background-color:#2d2d2d;color:#d3d0c8;">;
+
+unlock:
+    </span><span style="background-color:#2d2d2d;color:#747369;">/* Unlock the array so other threads can access it once more. */
+    </span><span style="background-color:#2d2d2d;color:#6699cc;">pthread_mutex_unlock</span><span style="background-color:#2d2d2d;color:#d3d0c8;">(&amp;data_array_lock);
+
+done:
+
+    </span><span style="background-color:#2d2d2d;color:#cc99cc;">if </span><span style="background-color:#2d2d2d;color:#d3d0c8;">(</span><span style="background-color:#2d2d2d;color:#f99157;">false </span><span style="background-color:#2d2d2d;color:#d3d0c8;">== status) {
+        </span><span style="background-color:#2d2d2d;color:#cc99cc;">if </span><span style="background-color:#2d2d2d;color:#d3d0c8;">(</span><span style="background-color:#2d2d2d;color:#f99157;">NULL </span><span style="background-color:#2d2d2d;color:#d3d0c8;">!= new_element) {
+            </span><span style="background-color:#2d2d2d;color:#cc99cc;">if </span><span style="background-color:#2d2d2d;color:#d3d0c8;">(</span><span style="background-color:#2d2d2d;color:#f99157;">NULL </span><span style="background-color:#2d2d2d;color:#d3d0c8;">!= new_element-&gt;name) {
+                </span><span style="background-color:#2d2d2d;color:#66cccc;">free</span><span style="background-color:#2d2d2d;color:#d3d0c8;">(new_element-&gt;name);
+            }
+            </span><span style="background-color:#2d2d2d;color:#66cccc;">free</span><span style="background-color:#2d2d2d;color:#d3d0c8;">(new_element);
+        }
+    }
+
+    </span><span style="background-color:#2d2d2d;color:#cc99cc;">return</span><span style="background-color:#2d2d2d;color:#d3d0c8;"> status;
+}
+</span></pre>
 <p>Another advantage of the <code>goto</code> method is that with <code>goto</code>'s and a common scheme for the label (like <code>done</code>), you can wrap <code>malloc</code>, <code>strdup</code>, <code>realloc</code>, and other functions with macros to try to enforce consistent error handling when allocation functions fail.</p>
 <p>Eg:</p>
 <pre style="background-color:#2d2d2d;">
@@ -77,7 +404,124 @@
 </span></pre>
 <p><code>*</code>As a side note, you may have noticed my the use of a <code>do { ... } while (0);</code> there. As it turns out, this confusing-looking contsruct does unfortunately have a place in C programming as a mechanism for writing safe and reliable function-like macros. It is once again a bit of a hack, but it's the best option we have. For more information, have a gander at <a href="https://stackoverflow.com/questions/1067226/c-multi-line-macro-do-while0-vs-scope-block">this explanation on StackOverflow</a>.</p>
 <p>So to make use of the macro wrappers in our original example, we have this final variant of our original program:</p>
-<iframe frameborder="0" height="2230px" scrolling="no" src="https://godbolt.org/e?readOnly=true&hideEditorToolbars=true#z:OYLghAFBqRAWIDGB7AJgUwKKoJYBdkAnAGhxAgDNkA7PAZUQEMAbdEARgBZiArD45o2qgA%2BmMTEAzulaI8OGuXTVUAYWTMArgFtqIAEwAGYstQAZHNXQA5HQCN0hfgAdkk/Aurqtug8dfu8jQWVrbaDk7sUjLocp50eIyEeN46ekbRskHUCUl4ITb2jvySicmpvhmleQVhERwAlFLImoSIbADkAPQAVADUuSpJqH3MOHaSfT1dAKSGAIIz%2BgDMlohaGH0zy6qlqHbIGgB0cNuYfRd9vX0AYkR9BxpTswtLq9Trmpvbu3i4tCczpcLtc7oQ%2Bto0I5qH1LHh0MBHH08ABPZzoSbTOaLFZrDboLY7PZjOyA5bnYGg%2B7aFjMZCILoUQjoAlY164j74wm/QiWYBkimXKng0qEVCaZzPbFvPFfAk/PYKAXAkH9MF9Zy82gUKWvBbXZZigC0zjyKL6Fgmupx70%2B3x2zjwcGZjFQAul7OWGAolgJABEAPIiACy8zMZgDqggADcksQ%2Bu4AF7oBpbACsqmxwNQyC2AHYAEIq4sly4zDNZkux8HbP0Q2n0iBJlPbIvpzMLUs4HUQawAVXDhL9tb61dTM0LZYrndLl2AyAIfRzVlbJfLHfmpYnddnu/XlYu276AHc4DhWH0IIYGh6bd7fX1AyIAEqYMMRqPV%2BPN1PF/czi4c3zNtd1AlV/03KtkBwEZ%2BnhbRnFXMCpw3Ut4MlEcXWYOlEBjOMExwZMb2WNsIK7Ht%2B0HWsR3Q8dJy3adIN3edF2XdAkLAsi1zzHdkM4xjS2rIdkXQBCOL4rjDx4k8zwvK8bz1O90B9KxHyDOgABVnz9PsAAU8JIB5NAoccBMuICJxAviUIPFUhJHUVxWcCA7GM4jSLM4tu0vSizCHEcx2Aw9PNnFjczY8TgtQ7jeOs9tbKPU9zwJeTb1RdFvQTPBCE0ORgNsxA4CSKY%2BmoRhtHYkjbOjaDYKXRhElbaVpLKirUBEVAGsYEQ8CaxTrgAdXQMAOmwvoGyYeFkTgAkkkIRhzWQHVOsSDVoNoRxJksWEPmZCraEmJa%2BnYQxDGtN571Uv15g0%2BYRHmZ9n3mABNEQCw/ABpEQ6AASQALXOE7DFvap5EQDUnRddrtE0eEAA8evqxIRDmhaRBwgBrYTdI0gAJV95j9EM%2Bw0zAAA0RB%2B6wfo0n6w3%2BzBnz6%2BZQZwcHWvQdqVu6vApn6YAOq6lHCHm80R185nWfB5tEYF7nhdFkRm2E4GSKufo6EIgkjtR80IG2mJ9rwVM2RZxIwYI5NZZEagdEF5HDeUPBJhHVW22uOokSOx3aB28aRYW879R6Hos36AABOxeWUvp5lQEZGFK9Bj1K8rOaRxOfd5xcnQJYA6TsFh/dFo4w7Dvpw9NebtFTiri0wVgjdr9jOwjqvyoz4tdPW%2BFwRzma%2BizjPy/D5k8FaGFss0AlgQb0SnYTXL2kkSQKE0bDzVdDA3RHseJ76CgWGkYEbkYZKRkXLfB8bp3S9bl55keZhxucdEVHt7qs4gFBqFKPpCuKv0Dm8YaowRKtzOiBZbJPyyg1TQLtlh1kPswaQzNgQcy5kLXmPQrDHhEEPcWA4zDM1st5XsRD/KIObvmTMeZVB9F8pQusED8oARVNcAsrp/bAEkGAMA1pSxhSXDQSqUC2HblvJSfo8xsL0garNJOKdRS5WzrmZwsM%2Bg0E0a0YuC0jgCMuE%2BUM4ZIwQFwfgm%2BtBvxayWmYtOmDkbG3cpIoU/QhrCOoCNXmyBjyTwHsAhMuZWB4BGpMJyYxJoEnwPo02wInyaW0npMxycLHz1oEaM4ASObOMUlIvoQ0RrMgeOgPkfRgA4GjMoTRvjNpnklEdXOGdvy5mPMNUaz8eDwN5owFeOBgB%2BIJK4OEjgYkP3QSkrOGTyQc2EtzEhbDrhmHpFjRputAkngJEwGEkhGAUBkJveO2jwS4OvmkvAozbKOmdOgV0IgYbw3RssiASwABs8tdaPMQBjHJiwFmhzYSVeYr9TBHM7kPfuBIQUNIHrrO%2BTELixMuGQxh1EqFyyFrrSBtk8nzADuaHMGJPEdF5ugOGOBSjxmCaE8asjImwmwQ/bFhigzGI/NAD%2BCsFrxmurde6j0XpvU%2Bt9BmJVmy2IwRyvAPQGg/MERyj5ysRw8rug9J6r13qRi%2Br9AG8z4VHhkMfMhAtbbaA5VnBBw40XyrxUrLWWKAWuNjni2Ekw17YXjBNeREIiAEgqpCQg5pEXFifATExUZ0XI11vGdl7ybWKv0EWZVfK1WCs1cKgGJtLboHFfYyV0rZUlgjd1BVWstgJqVTdFV/L1VCu1ZgNBZYeIuIuEWzlKJywFmNXbeW5ryx1hHOYrODaW0227ULc1ZaoFUPYLqvJdAl4Yl4fwoNsDx4WuRDlURt5NDUExiAWy1w%2By7uWdNWazrJC5gXDNPu1zXSTC2eNRAy8treI%2BL6n1Fy2FXKhnc2GpKRA7sxs8/QbyMU2sxj87EbF925KRT2ZBx9UV1lBvA%2B18LgTIooXwgdEzLHG1YehksmHBzYaoYOvDUzMDZII3FJkLJkl4MmZktOBa9xNodcWOj6AGOpKNqx8C7G9WCdsnvQg2zzbwJIYJjoTRmAgA6GmDoxA9AdEMEp5A8n6EXtaO0Mtyx2BKbwPJtTMriAYw4KdAQ8nOBKZU2p4gGmOhKckCAYwRnVMyaaJUwg7hFCcCAA"></iframe>
+<pre style="background-color:#2d2d2d;">
+<span style="background-color:#2d2d2d;color:#747369;">/* Standard libs */</span><span style="background-color:#2d2d2d;color:#d3d0c8;">
+#include &lt;stdbool.</span><span style="background-color:#2d2d2d;color:#f2777a;">h</span><span style="background-color:#2d2d2d;color:#d3d0c8;">&gt;    </span><span style="background-color:#2d2d2d;color:#747369;">/* For bool */</span><span style="background-color:#2d2d2d;color:#d3d0c8;">
+#include &lt;stdint.</span><span style="background-color:#2d2d2d;color:#f2777a;">h</span><span style="background-color:#2d2d2d;color:#d3d0c8;">&gt;     </span><span style="background-color:#2d2d2d;color:#747369;">/* For modern integer types */</span><span style="background-color:#2d2d2d;color:#d3d0c8;">
+#include &lt;stdlib.</span><span style="background-color:#2d2d2d;color:#f2777a;">h</span><span style="background-color:#2d2d2d;color:#d3d0c8;">&gt;     </span><span style="background-color:#2d2d2d;color:#747369;">/* For malloc/free */</span><span style="background-color:#2d2d2d;color:#d3d0c8;">
+#include &lt;string.</span><span style="background-color:#2d2d2d;color:#f2777a;">h</span><span style="background-color:#2d2d2d;color:#d3d0c8;">&gt;     </span><span style="background-color:#2d2d2d;color:#747369;">/* For strdup */</span><span style="background-color:#2d2d2d;color:#d3d0c8;">
+#include &lt;stdio.</span><span style="background-color:#2d2d2d;color:#f2777a;">h</span><span style="background-color:#2d2d2d;color:#d3d0c8;">&gt;      </span><span style="background-color:#2d2d2d;color:#747369;">/* For printf */
+
+/* 3rd-party Libs */</span><span style="background-color:#2d2d2d;color:#d3d0c8;">
+#include &lt;pthread.</span><span style="background-color:#2d2d2d;color:#f2777a;">h</span><span style="background-color:#2d2d2d;color:#d3d0c8;">&gt;
+
+#define </span><span style="background-color:#2d2d2d;color:#6699cc;">DO_MALLOC</span><span style="background-color:#2d2d2d;color:#d3d0c8;">(var, size)        \
+    </span><span style="background-color:#2d2d2d;color:#cc99cc;">do </span><span style="background-color:#2d2d2d;color:#d3d0c8;">{                            \
+        var = </span><span style="background-color:#2d2d2d;color:#66cccc;">malloc</span><span style="background-color:#2d2d2d;color:#d3d0c8;">(size);         \
+        </span><span style="background-color:#2d2d2d;color:#cc99cc;">if </span><span style="background-color:#2d2d2d;color:#d3d0c8;">(</span><span style="background-color:#2d2d2d;color:#f99157;">NULL </span><span style="background-color:#2d2d2d;color:#d3d0c8;">== var) {          \
+            </span><span style="background-color:#2d2d2d;color:#cc99cc;">goto</span><span style="background-color:#2d2d2d;color:#d3d0c8;"> done;              \
+        }                           \
+    } </span><span style="background-color:#2d2d2d;color:#cc99cc;">while </span><span style="background-color:#2d2d2d;color:#d3d0c8;">(</span><span style="background-color:#2d2d2d;color:#f99157;">0</span><span style="background-color:#2d2d2d;color:#d3d0c8;">)
+
+#define </span><span style="background-color:#2d2d2d;color:#6699cc;">DO_REALLOC</span><span style="background-color:#2d2d2d;color:#d3d0c8;">(var, size)       \
+    </span><span style="background-color:#2d2d2d;color:#cc99cc;">do </span><span style="background-color:#2d2d2d;color:#d3d0c8;">{                            \
+        </span><span style="background-color:#2d2d2d;color:#cc99cc;">void </span><span style="background-color:#2d2d2d;color:#d3d0c8;">* temp;                \
+        temp = </span><span style="background-color:#2d2d2d;color:#66cccc;">realloc</span><span style="background-color:#2d2d2d;color:#d3d0c8;">(var, size);  \
+        </span><span style="background-color:#2d2d2d;color:#cc99cc;">if </span><span style="background-color:#2d2d2d;color:#d3d0c8;">(</span><span style="background-color:#2d2d2d;color:#f99157;">NULL </span><span style="background-color:#2d2d2d;color:#d3d0c8;">== temp) {         \
+            </span><span style="background-color:#2d2d2d;color:#cc99cc;">goto</span><span style="background-color:#2d2d2d;color:#d3d0c8;"> done;              \
+        }                           \
+        var = temp;                 \
+    } </span><span style="background-color:#2d2d2d;color:#cc99cc;">while </span><span style="background-color:#2d2d2d;color:#d3d0c8;">(</span><span style="background-color:#2d2d2d;color:#f99157;">0</span><span style="background-color:#2d2d2d;color:#d3d0c8;">)
+
+#define </span><span style="background-color:#2d2d2d;color:#6699cc;">DO_STRDUP</span><span style="background-color:#2d2d2d;color:#d3d0c8;">(var, buf)         \
+    </span><span style="background-color:#2d2d2d;color:#cc99cc;">do </span><span style="background-color:#2d2d2d;color:#d3d0c8;">{                            \
+        var = </span><span style="background-color:#2d2d2d;color:#6699cc;">strdup</span><span style="background-color:#2d2d2d;color:#d3d0c8;">(buf);          \
+        </span><span style="background-color:#2d2d2d;color:#cc99cc;">if </span><span style="background-color:#2d2d2d;color:#d3d0c8;">(</span><span style="background-color:#2d2d2d;color:#f99157;">NULL </span><span style="background-color:#2d2d2d;color:#d3d0c8;">== var) {          \
+            </span><span style="background-color:#2d2d2d;color:#cc99cc;">goto</span><span style="background-color:#2d2d2d;color:#d3d0c8;"> done;              \
+        }                           \
+    } </span><span style="background-color:#2d2d2d;color:#cc99cc;">while </span><span style="background-color:#2d2d2d;color:#d3d0c8;">(</span><span style="background-color:#2d2d2d;color:#f99157;">0</span><span style="background-color:#2d2d2d;color:#d3d0c8;">)
+
+</span><span style="background-color:#2d2d2d;color:#cc99cc;">typedef struct </span><span style="background-color:#2d2d2d;color:#d3d0c8;">{
+    </span><span style="background-color:#2d2d2d;color:#cc99cc;">char </span><span style="background-color:#2d2d2d;color:#d3d0c8;">* name;
+    </span><span style="background-color:#2d2d2d;color:#cc99cc;">void </span><span style="background-color:#2d2d2d;color:#d3d0c8;">* data;
+} named_data_t;
+
+</span><span style="background-color:#2d2d2d;color:#747369;">/* We&#39;ll allocate the array of data pointers in increments of 100 */</span><span style="background-color:#2d2d2d;color:#d3d0c8;">
+#define DATA_ARRAY_BLOCK_SIZE </span><span style="background-color:#2d2d2d;color:#f99157;">100
+
+</span><span style="background-color:#2d2d2d;color:#cc99cc;">static </span><span style="background-color:#2d2d2d;color:#d3d0c8;">pthread_mutex_t data_array_lock = PTHREAD_MUTEX_INITIALIZER;
+</span><span style="background-color:#2d2d2d;color:#cc99cc;">static</span><span style="background-color:#2d2d2d;color:#d3d0c8;"> named_data_t ** g_data_array = </span><span style="background-color:#2d2d2d;color:#f99157;">NULL</span><span style="background-color:#2d2d2d;color:#d3d0c8;">;
+</span><span style="background-color:#2d2d2d;color:#cc99cc;">static </span><span style="background-color:#2d2d2d;color:#d3d0c8;">size_t g_data_array_size = </span><span style="background-color:#2d2d2d;color:#f99157;">0</span><span style="background-color:#2d2d2d;color:#d3d0c8;">; </span><span style="background-color:#2d2d2d;color:#747369;">/* Size of array (in element) */
+</span><span style="background-color:#2d2d2d;color:#cc99cc;">static </span><span style="background-color:#2d2d2d;color:#d3d0c8;">size_t g_num_data_elements = </span><span style="background-color:#2d2d2d;color:#f99157;">0</span><span style="background-color:#2d2d2d;color:#d3d0c8;">;  </span><span style="background-color:#2d2d2d;color:#747369;">/* Number of element in array */
+
+/**
+ * @brief Add a new named data element to the global array.
+ *
+ * @param name      Element name
+ * @param data      Pointer to the element data
+ * @return true     Element successfully added.
+ * @return false    Failed to add element.
+ */
+</span><span style="background-color:#2d2d2d;color:#cc99cc;">bool </span><span style="background-color:#2d2d2d;color:#6699cc;">append_data_element</span><span style="background-color:#2d2d2d;color:#d3d0c8;">(</span><span style="background-color:#2d2d2d;color:#cc99cc;">const char </span><span style="background-color:#2d2d2d;color:#d3d0c8;">* name, </span><span style="background-color:#2d2d2d;color:#cc99cc;">void </span><span style="background-color:#2d2d2d;color:#d3d0c8;">* data) {
+    </span><span style="background-color:#2d2d2d;color:#cc99cc;">bool</span><span style="background-color:#2d2d2d;color:#d3d0c8;"> status = </span><span style="background-color:#2d2d2d;color:#f99157;">false</span><span style="background-color:#2d2d2d;color:#d3d0c8;">;
+    named_data_t *new_element = </span><span style="background-color:#2d2d2d;color:#f99157;">NULL</span><span style="background-color:#2d2d2d;color:#d3d0c8;">;
+
+    </span><span style="background-color:#2d2d2d;color:#cc99cc;">if </span><span style="background-color:#2d2d2d;color:#d3d0c8;">(</span><span style="background-color:#2d2d2d;color:#f99157;">NULL </span><span style="background-color:#2d2d2d;color:#d3d0c8;">== name || </span><span style="background-color:#2d2d2d;color:#f99157;">NULL </span><span style="background-color:#2d2d2d;color:#d3d0c8;">== data) {
+        </span><span style="background-color:#2d2d2d;color:#747369;">/* Bad args! */
+        </span><span style="background-color:#2d2d2d;color:#cc99cc;">goto</span><span style="background-color:#2d2d2d;color:#d3d0c8;"> done;
+    }
+
+    </span><span style="background-color:#2d2d2d;color:#747369;">/* Allocate a new struct to put on our array. */
+    </span><span style="background-color:#2d2d2d;color:#6699cc;">DO_MALLOC</span><span style="background-color:#2d2d2d;color:#d3d0c8;">(new_element, sizeof(named_data_t));
+
+    </span><span style="background-color:#2d2d2d;color:#747369;">/* We don&#39;t own the name, so let&#39;s duplicate it. */
+    </span><span style="background-color:#2d2d2d;color:#6699cc;">DO_STRDUP</span><span style="background-color:#2d2d2d;color:#d3d0c8;">(new_element-&gt;name, name);
+
+    </span><span style="background-color:#2d2d2d;color:#747369;">/* We&#39;re being given ownership of the data, so we&#39;ll just assign the pointer. */</span><span style="background-color:#2d2d2d;color:#d3d0c8;">
+    new_element-&gt;name = data;
+
+    </span><span style="background-color:#2d2d2d;color:#747369;">/* Lock the array so we can safely add our new element. */
+    </span><span style="background-color:#2d2d2d;color:#6699cc;">pthread_mutex_lock</span><span style="background-color:#2d2d2d;color:#d3d0c8;">(&amp;data_array_lock);
+
+    </span><span style="background-color:#2d2d2d;color:#747369;">/*
+     * Append our data element to the end of the array.
+     */
+    </span><span style="background-color:#2d2d2d;color:#cc99cc;">if </span><span style="background-color:#2d2d2d;color:#d3d0c8;">(</span><span style="background-color:#2d2d2d;color:#f99157;">NULL </span><span style="background-color:#2d2d2d;color:#d3d0c8;">== g_data_array) {
+        </span><span style="background-color:#2d2d2d;color:#747369;">/* Array doesn&#39;t exist, let&#39;s allocate it */
+
+        </span><span style="background-color:#2d2d2d;color:#6699cc;">DO_MALLOC</span><span style="background-color:#2d2d2d;color:#d3d0c8;">(g_data_array, DATA_ARRAY_BLOCK_SIZE * sizeof(named_data_t*));
+        g_data_array_size = DATA_ARRAY_BLOCK_SIZE;
+
+    } </span><span style="background-color:#2d2d2d;color:#cc99cc;">else if </span><span style="background-color:#2d2d2d;color:#d3d0c8;">(g_num_data_elements == g_data_array_size) {
+        </span><span style="background-color:#2d2d2d;color:#747369;">/* Array is full, allocate more memory */
+        </span><span style="background-color:#2d2d2d;color:#6699cc;">DO_REALLOC</span><span style="background-color:#2d2d2d;color:#d3d0c8;">(g_data_array, (g_data_array_size + DATA_ARRAY_BLOCK_SIZE) * sizeof(named_data_t*));
+        g_data_array_size += DATA_ARRAY_BLOCK_SIZE;
+    }
+
+    g_data_array[g_num_data_elements] = new_element;
+    g_num_data_elements += </span><span style="background-color:#2d2d2d;color:#f99157;">1</span><span style="background-color:#2d2d2d;color:#d3d0c8;">;
+
+    </span><span style="background-color:#2d2d2d;color:#747369;">/* Success! */</span><span style="background-color:#2d2d2d;color:#d3d0c8;">
+    status = </span><span style="background-color:#2d2d2d;color:#f99157;">true</span><span style="background-color:#2d2d2d;color:#d3d0c8;">;
+
+unlock:
+    </span><span style="background-color:#2d2d2d;color:#747369;">/* Unlock the array so other threads can access it once more. */
+    </span><span style="background-color:#2d2d2d;color:#6699cc;">pthread_mutex_unlock</span><span style="background-color:#2d2d2d;color:#d3d0c8;">(&amp;data_array_lock);
+
+done:
+
+    </span><span style="background-color:#2d2d2d;color:#cc99cc;">if </span><span style="background-color:#2d2d2d;color:#d3d0c8;">(</span><span style="background-color:#2d2d2d;color:#f99157;">false </span><span style="background-color:#2d2d2d;color:#d3d0c8;">== status) {
+        </span><span style="background-color:#2d2d2d;color:#cc99cc;">if </span><span style="background-color:#2d2d2d;color:#d3d0c8;">(</span><span style="background-color:#2d2d2d;color:#f99157;">NULL </span><span style="background-color:#2d2d2d;color:#d3d0c8;">!= new_element) {
+            </span><span style="background-color:#2d2d2d;color:#cc99cc;">if </span><span style="background-color:#2d2d2d;color:#d3d0c8;">(</span><span style="background-color:#2d2d2d;color:#f99157;">NULL </span><span style="background-color:#2d2d2d;color:#d3d0c8;">!= new_element-&gt;name) {
+                </span><span style="background-color:#2d2d2d;color:#66cccc;">free</span><span style="background-color:#2d2d2d;color:#d3d0c8;">(new_element-&gt;name);
+            }
+            </span><span style="background-color:#2d2d2d;color:#66cccc;">free</span><span style="background-color:#2d2d2d;color:#d3d0c8;">(new_element);
+        }
+    }
+
+    </span><span style="background-color:#2d2d2d;color:#cc99cc;">return</span><span style="background-color:#2d2d2d;color:#d3d0c8;"> status;
+}
+</span></pre>
 <p>To end this piece, I'll leave you with some supporting links for how to safely use goto for error handling, and why perhaps do/while(0) can cause problems (with loops):</p>
 <ul>
 <li>https://embeddedgurus.com/barr-code/2018/06/cs-goto-keyword-should-we-use-it-or-lose-it/</li>
@@ -92,7 +536,135 @@
 <p>This pattern works when you're able to construct each line of code as a series of <code>else if</code> statements that test for failure with one final <code>else</code> for the success-condition. Resource cleanup happens <em>after</em> the final <code>else</code> block such that each failure condition and the success condition a followed immediately by resource cleanup.</p>
 <p>However, when following this pattern you may at some point need to set a variable in the middle or make some call doesn't chain. This breaks up the <code>else if</code> flow and can complicate your error handling pattern. It may be an indication that you should break up the function into multiple functions but resolving these <code>else if</code> interruptions in an elegant way often requires careful planning.</p>
 <p>Here's an attempt to apply the <code>else if</code> error handling pattern to our example program:</p>
-<iframe frameborder="0" height="2190px" scrolling="no" src="https://godbolt.org/e?readOnly=true&hideEditorToolbars=true#z:OYLghAFBqRAWIDGB7AJgUwKKoJYBdkAnAGhxAgDNkA7PAZUQEMAbdEARgBZiArD45o2qgA%2BmMTEAzulaI8OGuXTVUAYWTMArgFtqIAEwAGYstQAZHNXQA5HQCN0hfgAdkk/Aurqtug8dfu8jQWVrbaDk7sUjLocp50eIyEeN46ekbRskHUCUl4ITb2jvySicmpvhmleQVhERwAlFLImoSIbADkAPQAVADUuSpJqH3MOHaSfT1dAKSGAIIz%2BgDMlohaGH0zy6qlqHbIGgB0cNuYfRd9vX0AYkR9BxpTswtLq9Trmpvbu3i4tCczpcLtc7oQ%2Bto0I5qH1LHh0MBHH08ABPZzoSbTOaLFZrDboLY7PZjOyA5bnYGg%2B7aFjMZCILoUQjoAlY164j74wm/QiWYBkimXKng0qEVCaZzPbFvPFfAk/PYKAXAkH9MF9Zy82gUKWvBbXZZigC0zjyKL6Fgmupx70%2B3x2zjwcGZjFQAulC1R6IwOtFmjkWwA7AAhbHAxBwJJTPrURjadDbUMLYEAN2QOBG/VQjESielgYAIjG4%2BhUCJs4kRHg83r5tcAOroMAdZjMPq0%2Bk5glOglJQiMc3IHUVxga9O0RyTSywj7M%2BO0SZDvrsQyGa1vH2WAkF%2BYAFXmInmACUj/MAJoiYNmADyqgA0iI6ABJABa5xXhg982q8kQGqdLpltomjwgAHlWfQjiIfYDiIdKIAA1oSRYAAq7gAEkemDzAWIgALIAKq7pgAAaIhPtYT67k%2B8xmK%2BmBHjW36JL%2BxbxmWUF4FM/TAOWOaMNBhD9ua2xFtYBFmGYTE/jgf7uAAXugEG8VBMEoiICnyssRafsswaUv0dA4IpfRLmpfQQNOMTzngDTWjJcnGUpXG8dQOh8ZW1nKHgkyiX0un6Vc/R1EiS5ebQM7tkJA7rgsjxth2TDwiIwB0nYLAeQJakiDgFAiFYpalhAdkzCGYaXLG7GZRBPT9PC2jOEx5UXLlFkQOJknIX5Kn8YJwklfoABsSzDcmKoXO1ElmF12kWT1lbmX5NKtvSEA7vuh4nuel43vej70dGmlDhAlWltVeA9A0V1XUGSbzONqq3IwOCsCMBDtitSUEvGkKEOaVDgiOUXCWAYDWg9fTMngrQwhQLDSExwKlUWMjSLdzUqvNWXRepmnIX060Hsep4Xlet4Ps%2Bb6I5cyNfsCrVQK57lQeFPkzUWWN9bBmkDcNQ0Y8Ck2daJfkQPVkp%2BS6n3QNVanEHNss4xpTlbPo%2BmE5tJM7eT%2B1vnZ/RHRQJ0lhxvUXddN2lXdEPXPMON9AA7owU6TBQmitvLQgjA7BJwy9pbIsgH3wV2EJEN96C/eabL3Q9UMw30cPMAjekY8jfSo/KZVjeNnOLbN4vU7nivCcrJlLKGs0a8T21k3tlOYEXQYFnTlzx4QMJ4IQmgJqnryFl%2B8XtqgZas8bVWcVMVgOyIrMldnscXEPP6aL5s1Jynd0Y9cZj0khPbAzFkhBz7fRMDCkiMBQMjmq6IwtOC08Z6wNlHODlyOs66CuiIwFgXBe8IAjVUkreCCEGhNRzkFAW/R5jOHRCoUyrRIL8WfpHbygdkRwAJKYUyOoD5qSODAl4i9YQ6koPDLSLdZqJS7ClNKGUQGl1yvlFkGBUDFXntbB6oJnqvUwbQ%2BEWCCSpWQOlNsQNzIxyRoWZ%2BaMrYCyFD0RRlxDL%2BnaJITRKiLjSIennHGMwACswYmbaGqqzSQRiix%2BWnrPF%2B3km7AlMeY%2BxC5VaVyLOwSBpDgQrzXkWLuPcm601rAZPoBFqBgOEYfc0x9TI9nBABb%2BqBJjn3bIgDRU4uI0HaGHZkb9dEXE/oBX%2BIF0DgU0JEwBwDerZTARAvuiwoHtwvixVeTUB61l6Mo5M/QAACdheToB1PMEe7YYzoAdmxAOQNWaYIPqI8RMSiG9LDP000/ZtDTPGpgVxXFTprL6H0jZcYUGJHGihcc8JElBwPnMkchy%2BktORN3AkwJdnoIipIdRGJJBu1bLfEepYVn3X6c8jebyLg3D4QHd6d80GvzWSQoejB4GmBcZ8vAEAUDUFKGfSM4J%2BinXlmmDM0YRxcIxsvNp/jE6UKbqdU2lYuI9FsXMvyHUpKNIxgzTl7NtmlVUIKvofKRazQpejKBYTgyuiisASQoN37jU1HCI2Sx9B33yibEQzI5BCFSmwPoT5qAphYGSpIwAdDeQVWAIxqhqDqoadwi46dM5kIsqK7Sos2V7PxsteCEBDbjzOpxC2kqfFKL6NeECeCISRyICiRVhTm5yIJLyqa/KTqTLsZio0ZxTr41FOKZwwbroKKlZG6N2SdQ/QTUmkhMiUbJyzs6lUDYmwdGZA8dAfI%2BjABwCmZQpkHZWEIJIOAOBJRLgPiOeWcSfbNlbH0Hgq8uLO3cMATu2CxxwkcAUhtD0fW5vzSWfGDzuUVpauQiF/LNVjyPTZS2C8IZhOhf7N6Qd4VzOTY21N4aX1KO0SqNRGTfmWMveNH9D0VXaiAfoDVI8tVVV1YkYQrAQB9FGewvozYliGIVR0BFGD3qSJxqDO1Dr4Py1Ok67RITSH0e3v0VQrAhB9AlJ7SYBVsPJoZjesVRY/GUog%2Bmzq5HZoPu8sJiN41RPTXE0WSTtA83kho/%2BgDKomQsizTPVmKnMA0ccQ9ejGnE7MnQDpnNj6jMus6QxuzGNnl%2BI6S3BYHQmjMBAB0QxHRiB6A6IYXzyAvOqD6MfVouS3jsF83gLzgWrrEAQhwVcAgvOcF8/5wLxBgsdF85IEAxhYsBfc00QdY7PAgE4EAA%3D"></iframe>
+<pre style="background-color:#2d2d2d;">
+<span style="background-color:#2d2d2d;color:#747369;">/* Standard libs */</span><span style="background-color:#2d2d2d;color:#d3d0c8;">
+#include &lt;stdbool.</span><span style="background-color:#2d2d2d;color:#f2777a;">h</span><span style="background-color:#2d2d2d;color:#d3d0c8;">&gt;    </span><span style="background-color:#2d2d2d;color:#747369;">/* For bool */</span><span style="background-color:#2d2d2d;color:#d3d0c8;">
+#include &lt;stdint.</span><span style="background-color:#2d2d2d;color:#f2777a;">h</span><span style="background-color:#2d2d2d;color:#d3d0c8;">&gt;     </span><span style="background-color:#2d2d2d;color:#747369;">/* For modern integer types */</span><span style="background-color:#2d2d2d;color:#d3d0c8;">
+#include &lt;stdlib.</span><span style="background-color:#2d2d2d;color:#f2777a;">h</span><span style="background-color:#2d2d2d;color:#d3d0c8;">&gt;     </span><span style="background-color:#2d2d2d;color:#747369;">/* For malloc/free */</span><span style="background-color:#2d2d2d;color:#d3d0c8;">
+#include &lt;string.</span><span style="background-color:#2d2d2d;color:#f2777a;">h</span><span style="background-color:#2d2d2d;color:#d3d0c8;">&gt;     </span><span style="background-color:#2d2d2d;color:#747369;">/* For strdup */</span><span style="background-color:#2d2d2d;color:#d3d0c8;">
+#include &lt;stdio.</span><span style="background-color:#2d2d2d;color:#f2777a;">h</span><span style="background-color:#2d2d2d;color:#d3d0c8;">&gt;      </span><span style="background-color:#2d2d2d;color:#747369;">/* For printf */
+
+/* 3rd-party Libs */</span><span style="background-color:#2d2d2d;color:#d3d0c8;">
+#include &lt;pthread.</span><span style="background-color:#2d2d2d;color:#f2777a;">h</span><span style="background-color:#2d2d2d;color:#d3d0c8;">&gt;
+
+</span><span style="background-color:#2d2d2d;color:#cc99cc;">typedef struct </span><span style="background-color:#2d2d2d;color:#d3d0c8;">{
+    </span><span style="background-color:#2d2d2d;color:#cc99cc;">char </span><span style="background-color:#2d2d2d;color:#d3d0c8;">* name;
+    </span><span style="background-color:#2d2d2d;color:#cc99cc;">void </span><span style="background-color:#2d2d2d;color:#d3d0c8;">* data;
+} named_data_t;
+
+</span><span style="background-color:#2d2d2d;color:#747369;">/* We&#39;ll allocate the array of data pointers in increments of 100 */</span><span style="background-color:#2d2d2d;color:#d3d0c8;">
+#define DATA_ARRAY_BLOCK_SIZE </span><span style="background-color:#2d2d2d;color:#f99157;">100
+
+</span><span style="background-color:#2d2d2d;color:#cc99cc;">static </span><span style="background-color:#2d2d2d;color:#d3d0c8;">pthread_mutex_t data_array_lock = PTHREAD_MUTEX_INITIALIZER;
+</span><span style="background-color:#2d2d2d;color:#cc99cc;">static</span><span style="background-color:#2d2d2d;color:#d3d0c8;"> named_data_t ** g_data_array = </span><span style="background-color:#2d2d2d;color:#f99157;">NULL</span><span style="background-color:#2d2d2d;color:#d3d0c8;">;
+</span><span style="background-color:#2d2d2d;color:#cc99cc;">static </span><span style="background-color:#2d2d2d;color:#d3d0c8;">size_t g_data_array_size = </span><span style="background-color:#2d2d2d;color:#f99157;">0</span><span style="background-color:#2d2d2d;color:#d3d0c8;">;    </span><span style="background-color:#2d2d2d;color:#747369;">/* Size of array (in element) */
+</span><span style="background-color:#2d2d2d;color:#cc99cc;">static </span><span style="background-color:#2d2d2d;color:#d3d0c8;">size_t g_num_data_elements = </span><span style="background-color:#2d2d2d;color:#f99157;">0</span><span style="background-color:#2d2d2d;color:#d3d0c8;">;  </span><span style="background-color:#2d2d2d;color:#747369;">/* Number of element in array */
+
+</span><span style="background-color:#2d2d2d;color:#cc99cc;">bool </span><span style="background-color:#2d2d2d;color:#6699cc;">allocate_global_data_array_if_needed</span><span style="background-color:#2d2d2d;color:#d3d0c8;">() {
+    named_data_t ** temp;
+
+    </span><span style="background-color:#2d2d2d;color:#cc99cc;">if </span><span style="background-color:#2d2d2d;color:#d3d0c8;">((</span><span style="background-color:#2d2d2d;color:#f99157;">NULL </span><span style="background-color:#2d2d2d;color:#d3d0c8;">== g_data_array) &amp;&amp;
+        (</span><span style="background-color:#2d2d2d;color:#f99157;">NULL </span><span style="background-color:#2d2d2d;color:#d3d0c8;">== (g_data_array = </span><span style="background-color:#2d2d2d;color:#66cccc;">malloc</span><span style="background-color:#2d2d2d;color:#d3d0c8;">(DATA_ARRAY_BLOCK_SIZE * sizeof(named_data_t*))))) {
+        </span><span style="background-color:#2d2d2d;color:#747369;">/* Failed to allocate memory for data array! */
+        </span><span style="background-color:#2d2d2d;color:#cc99cc;">return </span><span style="background-color:#2d2d2d;color:#f99157;">false</span><span style="background-color:#2d2d2d;color:#d3d0c8;">;
+    } </span><span style="background-color:#2d2d2d;color:#cc99cc;">else </span><span style="background-color:#2d2d2d;color:#d3d0c8;">{
+        g_data_array_size = DATA_ARRAY_BLOCK_SIZE;
+    }
+
+    </span><span style="background-color:#2d2d2d;color:#cc99cc;">if </span><span style="background-color:#2d2d2d;color:#d3d0c8;">((g_num_data_elements == g_data_array_size) &amp;&amp;
+        (</span><span style="background-color:#2d2d2d;color:#f99157;">NULL </span><span style="background-color:#2d2d2d;color:#d3d0c8;">== (temp = </span><span style="background-color:#2d2d2d;color:#66cccc;">realloc</span><span style="background-color:#2d2d2d;color:#d3d0c8;">(g_data_array, (g_data_array_size + DATA_ARRAY_BLOCK_SIZE) * sizeof(named_data_t*))))) {
+        </span><span style="background-color:#2d2d2d;color:#747369;">/* Array was is full, and we failed to allocate more memory */
+        </span><span style="background-color:#2d2d2d;color:#cc99cc;">return </span><span style="background-color:#2d2d2d;color:#f99157;">false</span><span style="background-color:#2d2d2d;color:#d3d0c8;">;
+    } </span><span style="background-color:#2d2d2d;color:#cc99cc;">else </span><span style="background-color:#2d2d2d;color:#d3d0c8;">{
+        g_data_array = temp;
+        g_data_array_size += DATA_ARRAY_BLOCK_SIZE;
+    }
+
+    </span><span style="background-color:#2d2d2d;color:#cc99cc;">return </span><span style="background-color:#2d2d2d;color:#f99157;">true</span><span style="background-color:#2d2d2d;color:#d3d0c8;">;
+}
+
+</span><span style="background-color:#2d2d2d;color:#cc99cc;">bool </span><span style="background-color:#2d2d2d;color:#6699cc;">add_element</span><span style="background-color:#2d2d2d;color:#d3d0c8;">(named_data_t *new_element) {
+    </span><span style="background-color:#2d2d2d;color:#cc99cc;">bool</span><span style="background-color:#2d2d2d;color:#d3d0c8;"> status = </span><span style="background-color:#2d2d2d;color:#f99157;">false</span><span style="background-color:#2d2d2d;color:#d3d0c8;">;
+
+    </span><span style="background-color:#2d2d2d;color:#747369;">/* Lock the array so we can safely add our new element. */
+    </span><span style="background-color:#2d2d2d;color:#6699cc;">pthread_mutex_lock</span><span style="background-color:#2d2d2d;color:#d3d0c8;">(&amp;data_array_lock);
+
+    </span><span style="background-color:#2d2d2d;color:#747369;">/*
+     * Append our data element to the end of the array.
+     */
+    </span><span style="background-color:#2d2d2d;color:#cc99cc;">if </span><span style="background-color:#2d2d2d;color:#d3d0c8;">(</span><span style="background-color:#2d2d2d;color:#f99157;">false </span><span style="background-color:#2d2d2d;color:#d3d0c8;">== </span><span style="background-color:#2d2d2d;color:#6699cc;">allocate_global_data_array_if_needed</span><span style="background-color:#2d2d2d;color:#d3d0c8;">()) {
+        </span><span style="background-color:#2d2d2d;color:#747369;">/* Failed to allocate the global data array */
+    </span><span style="background-color:#2d2d2d;color:#d3d0c8;">} </span><span style="background-color:#2d2d2d;color:#cc99cc;">else </span><span style="background-color:#2d2d2d;color:#d3d0c8;">{
+        </span><span style="background-color:#2d2d2d;color:#747369;">/*
+         * Successs
+         */</span><span style="background-color:#2d2d2d;color:#d3d0c8;">
+        g_data_array[g_num_data_elements] = new_element;
+        g_num_data_elements += </span><span style="background-color:#2d2d2d;color:#f99157;">1</span><span style="background-color:#2d2d2d;color:#d3d0c8;">;
+
+        status = </span><span style="background-color:#2d2d2d;color:#f99157;">true</span><span style="background-color:#2d2d2d;color:#d3d0c8;">;
+    }
+
+    </span><span style="background-color:#2d2d2d;color:#747369;">/* Unlock the array so other threads can access it once more. */
+    </span><span style="background-color:#2d2d2d;color:#6699cc;">pthread_mutex_unlock</span><span style="background-color:#2d2d2d;color:#d3d0c8;">(&amp;data_array_lock);
+
+    </span><span style="background-color:#2d2d2d;color:#cc99cc;">return</span><span style="background-color:#2d2d2d;color:#d3d0c8;"> status;
+}
+
+</span><span style="background-color:#2d2d2d;color:#747369;">/**
+ * @brief Add a new named data element to the global array.
+ *
+ * @param name      Element name
+ * @param data      Pointer to the element data
+ * @return true     Element successfully added.
+ * @return false    Failed to add element.
+ */
+</span><span style="background-color:#2d2d2d;color:#cc99cc;">bool </span><span style="background-color:#2d2d2d;color:#6699cc;">append_data_element</span><span style="background-color:#2d2d2d;color:#d3d0c8;">(</span><span style="background-color:#2d2d2d;color:#cc99cc;">const char </span><span style="background-color:#2d2d2d;color:#d3d0c8;">* name, </span><span style="background-color:#2d2d2d;color:#cc99cc;">void </span><span style="background-color:#2d2d2d;color:#d3d0c8;">* data) {
+    </span><span style="background-color:#2d2d2d;color:#cc99cc;">bool</span><span style="background-color:#2d2d2d;color:#d3d0c8;"> status = </span><span style="background-color:#2d2d2d;color:#f99157;">false</span><span style="background-color:#2d2d2d;color:#d3d0c8;">;
+    named_data_t *new_element = </span><span style="background-color:#2d2d2d;color:#f99157;">NULL</span><span style="background-color:#2d2d2d;color:#d3d0c8;">;
+
+    </span><span style="background-color:#2d2d2d;color:#cc99cc;">if </span><span style="background-color:#2d2d2d;color:#d3d0c8;">(</span><span style="background-color:#2d2d2d;color:#f99157;">NULL </span><span style="background-color:#2d2d2d;color:#d3d0c8;">== name || </span><span style="background-color:#2d2d2d;color:#f99157;">NULL </span><span style="background-color:#2d2d2d;color:#d3d0c8;">== data) {
+        </span><span style="background-color:#2d2d2d;color:#747369;">/* Bad args! */
+        </span><span style="background-color:#2d2d2d;color:#66cccc;">printf</span><span style="background-color:#2d2d2d;color:#d3d0c8;">(&quot;</span><span style="background-color:#2d2d2d;color:#99cc99;">add_named_rectangle: Invalid arguments!</span><span style="background-color:#2d2d2d;color:#66cccc;">\n</span><span style="background-color:#2d2d2d;color:#d3d0c8;">&quot;);
+    } </span><span style="background-color:#2d2d2d;color:#cc99cc;">else if </span><span style="background-color:#2d2d2d;color:#d3d0c8;">(</span><span style="background-color:#2d2d2d;color:#f99157;">NULL </span><span style="background-color:#2d2d2d;color:#d3d0c8;">== (new_element = </span><span style="background-color:#2d2d2d;color:#66cccc;">malloc</span><span style="background-color:#2d2d2d;color:#d3d0c8;">(sizeof(named_data_t)))) {
+        </span><span style="background-color:#2d2d2d;color:#747369;">/* Out of memory! */
+    </span><span style="background-color:#2d2d2d;color:#d3d0c8;">} </span><span style="background-color:#2d2d2d;color:#cc99cc;">else if </span><span style="background-color:#2d2d2d;color:#d3d0c8;">(</span><span style="background-color:#2d2d2d;color:#f99157;">NULL </span><span style="background-color:#2d2d2d;color:#d3d0c8;">== (new_element-&gt;name = </span><span style="background-color:#2d2d2d;color:#6699cc;">strdup</span><span style="background-color:#2d2d2d;color:#d3d0c8;">(name))){
+        </span><span style="background-color:#2d2d2d;color:#747369;">/* Out of memory! */
+    </span><span style="background-color:#2d2d2d;color:#d3d0c8;">} </span><span style="background-color:#2d2d2d;color:#cc99cc;">else </span><span style="background-color:#2d2d2d;color:#d3d0c8;">{
+        </span><span style="background-color:#2d2d2d;color:#747369;">/* We&#39;re being given ownership of the data, so we&#39;ll just assign the pointer. */</span><span style="background-color:#2d2d2d;color:#d3d0c8;">
+        new_element-&gt;name = data;
+
+        </span><span style="background-color:#2d2d2d;color:#cc99cc;">if </span><span style="background-color:#2d2d2d;color:#d3d0c8;">(</span><span style="background-color:#2d2d2d;color:#f99157;">false </span><span style="background-color:#2d2d2d;color:#d3d0c8;">== </span><span style="background-color:#2d2d2d;color:#6699cc;">add_element</span><span style="background-color:#2d2d2d;color:#d3d0c8;">(new_element)) {
+            </span><span style="background-color:#2d2d2d;color:#747369;">/* Failed to add element */
+        </span><span style="background-color:#2d2d2d;color:#d3d0c8;">} </span><span style="background-color:#2d2d2d;color:#cc99cc;">else </span><span style="background-color:#2d2d2d;color:#d3d0c8;">{
+            </span><span style="background-color:#2d2d2d;color:#747369;">/*
+             * Successs
+             */
+            </span><span style="background-color:#2d2d2d;color:#66cccc;">printf</span><span style="background-color:#2d2d2d;color:#d3d0c8;">(&quot;</span><span style="background-color:#2d2d2d;color:#99cc99;">add_named_rectangle: Added &#39;</span><span style="background-color:#2d2d2d;color:#f99157;">%s</span><span style="background-color:#2d2d2d;color:#99cc99;">&#39; element to data array!</span><span style="background-color:#2d2d2d;color:#66cccc;">\n</span><span style="background-color:#2d2d2d;color:#d3d0c8;">&quot;, name);
+        }
+    }
+
+    </span><span style="background-color:#2d2d2d;color:#747369;">/* Clean up, as needed */
+    </span><span style="background-color:#2d2d2d;color:#cc99cc;">if </span><span style="background-color:#2d2d2d;color:#d3d0c8;">(</span><span style="background-color:#2d2d2d;color:#f99157;">false </span><span style="background-color:#2d2d2d;color:#d3d0c8;">== status) {
+        </span><span style="background-color:#2d2d2d;color:#cc99cc;">if </span><span style="background-color:#2d2d2d;color:#d3d0c8;">(</span><span style="background-color:#2d2d2d;color:#f99157;">NULL </span><span style="background-color:#2d2d2d;color:#d3d0c8;">!= new_element) {
+            </span><span style="background-color:#2d2d2d;color:#cc99cc;">if </span><span style="background-color:#2d2d2d;color:#d3d0c8;">(</span><span style="background-color:#2d2d2d;color:#f99157;">NULL </span><span style="background-color:#2d2d2d;color:#d3d0c8;">!= new_element-&gt;name) {
+                </span><span style="background-color:#2d2d2d;color:#66cccc;">free</span><span style="background-color:#2d2d2d;color:#d3d0c8;">(new_element-&gt;name);
+            }
+            </span><span style="background-color:#2d2d2d;color:#66cccc;">free</span><span style="background-color:#2d2d2d;color:#d3d0c8;">(new_element);
+        }
+    }
+
+    </span><span style="background-color:#2d2d2d;color:#cc99cc;">return</span><span style="background-color:#2d2d2d;color:#d3d0c8;"> status;
+}
+
+</span><span style="background-color:#2d2d2d;color:#cc99cc;">int </span><span style="background-color:#2d2d2d;color:#6699cc;">main</span><span style="background-color:#2d2d2d;color:#d3d0c8;">(</span><span style="background-color:#2d2d2d;color:#cc99cc;">void</span><span style="background-color:#2d2d2d;color:#d3d0c8;">) {
+    </span><span style="background-color:#2d2d2d;color:#cc99cc;">if </span><span style="background-color:#2d2d2d;color:#d3d0c8;">(</span><span style="background-color:#2d2d2d;color:#f99157;">true </span><span style="background-color:#2d2d2d;color:#d3d0c8;">== </span><span style="background-color:#2d2d2d;color:#6699cc;">append_data_element</span><span style="background-color:#2d2d2d;color:#d3d0c8;">(&quot;</span><span style="background-color:#2d2d2d;color:#99cc99;">Hello</span><span style="background-color:#2d2d2d;color:#d3d0c8;">&quot;, (</span><span style="background-color:#2d2d2d;color:#cc99cc;">void </span><span style="background-color:#2d2d2d;color:#d3d0c8;">*)&quot;</span><span style="background-color:#2d2d2d;color:#99cc99;">World</span><span style="background-color:#2d2d2d;color:#d3d0c8;">&quot;)) {
+        </span><span style="background-color:#2d2d2d;color:#66cccc;">printf</span><span style="background-color:#2d2d2d;color:#d3d0c8;">(&quot;</span><span style="background-color:#2d2d2d;color:#99cc99;">Added element to array</span><span style="background-color:#2d2d2d;color:#66cccc;">\n</span><span style="background-color:#2d2d2d;color:#d3d0c8;">&quot;);
+        </span><span style="background-color:#2d2d2d;color:#cc99cc;">return </span><span style="background-color:#2d2d2d;color:#f99157;">0</span><span style="background-color:#2d2d2d;color:#d3d0c8;">;
+    }
+    </span><span style="background-color:#2d2d2d;color:#66cccc;">printf</span><span style="background-color:#2d2d2d;color:#d3d0c8;">(&quot;</span><span style="background-color:#2d2d2d;color:#99cc99;">Failed to add element to array</span><span style="background-color:#2d2d2d;color:#66cccc;">\n</span><span style="background-color:#2d2d2d;color:#d3d0c8;">&quot;);
+    </span><span style="background-color:#2d2d2d;color:#cc99cc;">return </span><span style="background-color:#2d2d2d;color:#f99157;">1</span><span style="background-color:#2d2d2d;color:#d3d0c8;">;
+}
+</span></pre>
 <p>The <code>else if</code> pattern is works out ok for a few calls in but it breaks down a bit when you need to set variables or make standalone calls like our call to lock &amp; unlock the mutex, or to allocate memory for the global data array if needed.</p>
 <p>With some careful planning and well structured functions, this pattern can be quite effective, but it does take a surprising amount of effort.</p>
 <p>I used to like the <code>else if</code> pattern quite a bit. Nowadays, the <code>goto done</code> pattern is my error handling method of choice. The <code>goto done</code> pattern is easier to read, write, and maintain.</p>

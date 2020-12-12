@@ -8,12 +8,12 @@
 /* 3rd-party Libs */
 #include <pthread.h>
 
-#define DO_MALLOC(var, size) \
-    do {                     \
-        var = malloc(size);  \
-        if (NULL == var) {   \
-            goto done;       \
-        }                    \
+#define DO_MALLOC(var, size)        \
+    do {                            \
+        var = malloc(size);         \
+        if (NULL == var) {          \
+            goto done;              \
+        }                           \
     } while (0)
 
 #define DO_REALLOC(var, size)       \
@@ -26,12 +26,12 @@
         var = temp;                 \
     } while (0)
 
-#define DO_STRDUP(var, buf) \
-    do {                    \
-        var = strdup(buf);  \
-        if (NULL == var) {  \
-            goto done;      \
-        }                   \
+#define DO_STRDUP(var, buf)         \
+    do {                            \
+        var = strdup(buf);          \
+        if (NULL == var) {          \
+            goto done;              \
+        }                           \
     } while (0)
 
 typedef struct {
