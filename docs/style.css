@@ -29,9 +29,8 @@ body {
 }
 .leftDiv iframe {
   position:relative;
-  width:100%;
+  width:940px;
 }
-
 .rightDiv
 {
   /* background-color: #efefef;
@@ -198,6 +197,10 @@ hr {
   .menu-item:hover {
     border-left: none;
   }
+  .leftDiv iframe {
+    position:relative;
+    width:800px;
+  }
 }
 
 @media all and (max-width:768px) {
@@ -206,6 +209,10 @@ hr {
   }
   main {
     padding: 20px 40px;
+  }
+  .leftDiv iframe {
+    position:relative;
+    width:600px;
   }
 }
 
@@ -225,6 +232,10 @@ hr {
   }
   h2 {
     font-size: 20px;
+  }
+  .leftDiv iframe {
+    position:relative;
+    width:300px;
   }
 }
 
