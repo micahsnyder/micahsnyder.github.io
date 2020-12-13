@@ -1,25 +1,10 @@
-/* Standard libs */
-#include <stdbool.h>    /* For bool */
-#include <stdint.h>     /* For modern integer types */
-#include <stdlib.h>     /* For malloc/free */
-#include <string.h>     /* For strdup */
-#include <stdio.h>      /* For printf */
+/*
+ * Copyright (c) 2020 Micah Snyder
+ *
+ * Example using "do - while(0)" pattern.
+ */
 
-/* 3rd-party Libs */
-#include <pthread.h>
-
-typedef struct {
-    char * name;
-    void * data;
-} named_data_t;
-
-/* We'll allocate the array of data pointers in increments of 100 */
-#define ARRAY_BLK_SZ 100
-
-static pthread_mutex_t data_array_lock = PTHREAD_MUTEX_INITIALIZER;
-static named_data_t ** g_data_array = NULL;
-static size_t g_data_array_size = 0;    /* Size of array (in element) */
-static size_t g_num_data_elements = 0;  /* Number of element in array */
+#include "sample_test.h"
 
 /**
  * @brief Add a new named data element to the global array.
@@ -54,7 +39,7 @@ bool append_data_element(const char * name, void * data) {
         }
 
         /* We're given ownership of the data, so we'll assign the pointer. */
-        new_element->name = data;
+        new_element->data = data;
 
         /* Lock the array so we can safely add our new element. */
         pthread_mutex_lock(&data_array_lock);
@@ -112,13 +97,4 @@ bool append_data_element(const char * name, void * data) {
     }
 
     return status;
-}
-
-int main(void) {
-    if (true == append_data_element("Hello", (void *)"World")) {
-        printf("Added element to array\n");
-        return 0;
-    }
-    printf("Failed to add element to array\n");
-    return 1;
 }

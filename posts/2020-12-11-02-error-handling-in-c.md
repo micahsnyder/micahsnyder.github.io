@@ -18,35 +18,16 @@ In this article I'll present an overview of a few different error handling metho
 
 By the end of this article, I hope you'll agree with me on the best option for error handling in C (_hint_: it's `goto`).
 
-## Multiple `return`'s
+_Nota bene_: The following code samples are snippets. You can find the full source in the blog git repository under the [sample_code](https://github.com/micahsnyder/micahsnyder.github.io/tree/master/sample_code) directory.
+
+## The "Multiple Return" pattern
 
 Perhaps the most common method for error handling, especially in older C code involves the use of multiple `return` statements. Allocated memory, thread locks, and other resources are cleaned up as-needed at each `return`.
 
 Without further ado, here's our first variant of the example program featuring the "Multiple `return`s" error handling method:
 
 ```c
-/* Standard libs */
-#include <stdbool.h>    /* For bool */
-#include <stdint.h>     /* For modern integer types */
-#include <stdlib.h>     /* For malloc/free */
-#include <string.h>     /* For strdup */
-#include <stdio.h>      /* For printf */
-
-/* 3rd-party Libs */
-#include <pthread.h>
-
-typedef struct {
-    char * name;
-    void * data;
-} named_data_t;
-
-/* We'll allocate the array of data pointers in increments of 100 */
-#define ARRAY_BLK_SZ 100
-
-static pthread_mutex_t data_array_lock = PTHREAD_MUTEX_INITIALIZER;
-static named_data_t ** g_data_array = NULL;
-static size_t g_data_array_size = 0;    /* Size of array (in element) */
-static size_t g_num_data_elements = 0;  /* Number of element in array */
+#include "sample_test.h"
 
 /**
  * @brief Add a new named data element to the global array.
@@ -81,7 +62,7 @@ bool append_data_element(const char * name, void * data) {
     }
 
     /* We're given ownership of the data, so we'll assign the pointer. */
-    new_element->name = data;
+    new_element->data = data;
 
     /* Lock the array so we can safely add our new element. */
     pthread_mutex_lock(&data_array_lock);
@@ -95,6 +76,7 @@ bool append_data_element(const char * name, void * data) {
         g_data_array = malloc(ARRAY_BLK_SZ * sizeof(named_data_t*));
         if (NULL == g_data_array) {
             /* Failed to allocate memory for data array! */
+            pthread_mutex_unlock(&data_array_lock);
             free(new_element->name);
             free(new_element);
             return false;
@@ -111,6 +93,7 @@ bool append_data_element(const char * name, void * data) {
             (g_data_array_size + ARRAY_BLK_SZ) * sizeof(named_data_t*));
         if (NULL == temp) {
             /* Failed to increase size of data array! */
+            pthread_mutex_unlock(&data_array_lock);
             free(new_element->name);
             free(new_element);
             return false;
@@ -134,43 +117,22 @@ bool append_data_element(const char * name, void * data) {
 
 As you review the above example, note how much duplicate code exists for resource cleanup during error handling. Can you see how easy it would be to forget to clean up a malloced pointer or a locked mutex. This is a recipe for disaster!
 
-## The `do { ... } while(0)`
+## The "do - while(0)" pattern
 
-Another surprisingly popular option for error handling in C is to wrap all function code in a big ol' `do { ... } while(0);` "loop".
+Another surprisingly popular option for error handling in C is to wrap all function code in a big ol' `while` "loop" that doesn't actually loop.
 
-I'm not a big fan of the `do { ... } while(0);` approach to error handling for a few reasons...
+I'm not a big fan of the "do - while(0)" approach to error handling for a few reasons...
 
 First and foremost, it's an obvious hack to perform a `goto` without using the word `goto`!
 
 Secondly, it's confusing. To the novice programmer, this approach for error handling is non-obvious because it abuses the do-while looping construct to perform a completely different task. An experienced programmer may appreciate such cleverness but the simple fact is that code which is hard to read is hard to maintain and increases the barrier to entry for novice programmers with little if any real benefit.
 
-Additionally, I think the extra indentation of the  `do { ... } while(0);` is harder to read.
+Additionally, I think the extra indentation of the "do - while(0)" is harder to read.
 
 Here's our example using the do-while method:
 
 ```c
-/* Standard libs */
-#include <stdbool.h>    /* For bool */
-#include <stdint.h>     /* For modern integer types */
-#include <stdlib.h>     /* For malloc/free */
-#include <string.h>     /* For strdup */
-#include <stdio.h>      /* For printf */
-
-/* 3rd-party Libs */
-#include <pthread.h>
-
-typedef struct {
-    char * name;
-    void * data;
-} named_data_t;
-
-/* We'll allocate the array of data pointers in increments of 100 */
-#define ARRAY_BLK_SZ 100
-
-static pthread_mutex_t data_array_lock = PTHREAD_MUTEX_INITIALIZER;
-static named_data_t ** g_data_array = NULL;
-static size_t g_data_array_size = 0;    /* Size of array (in element) */
-static size_t g_num_data_elements = 0;  /* Number of element in array */
+#include "sample_test.h"
 
 /**
  * @brief Add a new named data element to the global array.
@@ -205,7 +167,7 @@ bool append_data_element(const char * name, void * data) {
         }
 
         /* We're given ownership of the data, so we'll assign the pointer. */
-        new_element->name = data;
+        new_element->data = data;
 
         /* Lock the array so we can safely add our new element. */
         pthread_mutex_lock(&data_array_lock);
@@ -274,40 +236,19 @@ But the real reason this method is bad is that it isn't as flexible as using `go
 
 ## Exception Handling
 
-Ha-ha just kidding! 😅 While exception handling is actually available to C programmers on Windows (!), it's not accessible for cross-platform C software development. Call me a snob, but I believe that applications should be written to be as portable as possible.
+Ha-ha just kidding! 😅 While exception handling is actually available to C programmers on Windows (❕), it's not accessible for cross-platform C software development and so is not something I'm going to spend any time on.
 
-## The `goto done`
+## The "goto done" pattern
 
-Finally we get to the `goto done` method for error handling and resource cleanup. I don't wish to anger the ghost of Edsger Dijkstra so I should warn you that the key to using `goto` "right" are thus:
+Finally we get to the "goto done" method for error handling and resource cleanup. I don't wish to anger the ghost of Edsger Dijkstra so I should warn you that the key to using `goto` "right" are thus:
 
-1. _Always_ go-forwards! **NEVER** go backwards!
+1. _Always_ go forwards! **NEVER** go backwards!
 2. Keep it simple! Multiple labels are cool and may help from time to time, like in our example. But 9 times out of 10 you only need one label. Also, I should have to say this but keep your functions at a reasonable size.  They shouldn't be 1-liners but if they get much larger than a page or two, consider refactoring!
 
-Here I present to you the example code using the `goto` method:
+Here I present to you the example code using the "goto done" method:
 
 ```c
-/* Standard libs */
-#include <stdbool.h>    /* For bool */
-#include <stdint.h>     /* For modern integer types */
-#include <stdlib.h>     /* For malloc/free */
-#include <string.h>     /* For strdup */
-#include <stdio.h>      /* For printf */
-
-/* 3rd-party Libs */
-#include <pthread.h>
-
-typedef struct {
-    char * name;
-    void * data;
-} named_data_t;
-
-/* We'll allocate the array of data pointers in increments of 100 */
-#define ARRAY_BLK_SZ 100
-
-static pthread_mutex_t data_array_lock = PTHREAD_MUTEX_INITIALIZER;
-static named_data_t ** g_data_array = NULL;
-static size_t g_data_array_size = 0; /* Size of array (in element) */
-static size_t g_num_data_elements = 0;  /* Number of element in array */
+#include "sample_test.h"
 
 /**
  * @brief Add a new named data element to the global array.
@@ -341,7 +282,7 @@ bool append_data_element(const char * name, void * data) {
     }
 
     /* We're given ownership of the data, so we'll assign the pointer. */
-    new_element->name = data;
+    new_element->data = data;
 
     /* Lock the array so we can safely add our new element. */
     pthread_mutex_lock(&data_array_lock);
@@ -405,68 +346,47 @@ Another advantage of the `goto` method is that with `goto`'s and a common scheme
 Eg:
 
 ```c
-#define DO_MALLOC(var, size) \
-    do {                     \
-        var = malloc(size);  \
-        if (NULL == var) {   \
-            goto done;       \
-        }                    \
+#define MALLOC_OR_GOTO(var, size, label)  \
+    do {                                  \
+        var = malloc(size);               \
+        if (NULL == var) {                \
+            goto label;                   \
+        }                                 \
     } while (0)
 ```
 
-`*`As a side note, you may have noticed my the use of a `do { ... } while (0);` there. As it turns out, this confusing-looking contsruct does unfortunately have a place in C programming as a mechanism for writing safe and reliable function-like macros. It is once again a bit of a hack, but it's the best option we have. For more information, have a gander at [this explanation on StackOverflow](https://stackoverflow.com/questions/1067226/c-multi-line-macro-do-while0-vs-scope-block).
+`*`As a side note, you may have noticed my the use of a `do { ... } while(0)` in the above macro. As it turns out, this confusing contsruct does unfortunately have a place in C programming as a mechanism for writing safe and reliable function-like macros. It is once again a bit of a hack, but it's the best option we have. For more information, have a gander at [this explanation on StackOverflow](https://stackoverflow.com/questions/1067226/c-multi-line-macro-do-while0-vs-scope-block).
 
-So to make use of the macro wrappers in our original example, we have this final variant of our original program:
+To make use of the macro wrappers in our original example, we have this final variant of our original program:
 
 ```c
-/* Standard libs */
-#include <stdbool.h>    /* For bool */
-#include <stdint.h>     /* For modern integer types */
-#include <stdlib.h>     /* For malloc/free */
-#include <string.h>     /* For strdup */
-#include <stdio.h>      /* For printf */
+#include "sample_test.h"
 
-/* 3rd-party Libs */
-#include <pthread.h>
-
-#define DO_MALLOC(var, size)        \
-    do {                            \
-        var = malloc(size);         \
-        if (NULL == var) {          \
-            goto done;              \
-        }                           \
+#define MALLOC_OR_GOTO(var, size, label)  \
+    do {                                  \
+        var = malloc(size);               \
+        if (NULL == var) {                \
+            goto label;                   \
+        }                                 \
     } while (0)
 
-#define DO_REALLOC(var, size)       \
-    do {                            \
-        void * temp;                \
-        temp = realloc(var, size);  \
-        if (NULL == temp) {         \
-            goto done;              \
-        }                           \
-        var = temp;                 \
+#define REALLOC_OR_GOTO(var, size, label) \
+    do {                                  \
+        void * temp;                      \
+        temp = realloc(var, size);        \
+        if (NULL == temp) {               \
+            goto label;                   \
+        }                                 \
+        var = temp;                       \
     } while (0)
 
-#define DO_STRDUP(var, buf)         \
-    do {                            \
-        var = strdup(buf);          \
-        if (NULL == var) {          \
-            goto done;              \
-        }                           \
+#define STRDUP_OR_GOTO(var, buf, label)   \
+    do {                                  \
+        var = strdup(buf);                \
+        if (NULL == var) {                \
+            goto label;                   \
+        }                                 \
     } while (0)
-
-typedef struct {
-    char * name;
-    void * data;
-} named_data_t;
-
-/* We'll allocate the array of data pointers in increments of 100 */
-#define ARRAY_BLK_SZ 100
-
-static pthread_mutex_t data_array_lock = PTHREAD_MUTEX_INITIALIZER;
-static named_data_t ** g_data_array = NULL;
-static size_t g_data_array_size = 0; /* Size of array (in element) */
-static size_t g_num_data_elements = 0;  /* Number of element in array */
 
 /**
  * @brief Add a new named data element to the global array.
@@ -486,13 +406,13 @@ bool append_data_element(const char * name, void * data) {
     }
 
     /* Allocate a new struct to put on our array. */
-    DO_MALLOC(new_element, sizeof(named_data_t));
+    MALLOC_OR_GOTO(new_element, sizeof(named_data_t), done);
 
     /* We don't own the name, so let's duplicate it. */
-    DO_STRDUP(new_element->name, name);
+    STRDUP_OR_GOTO(new_element->name, name, done);
 
     /* We're given ownership of the data, so we'll assign the pointer. */
-    new_element->name = data;
+    new_element->data = data;
 
     /* Lock the array so we can safely add our new element. */
     pthread_mutex_lock(&data_array_lock);
@@ -503,14 +423,18 @@ bool append_data_element(const char * name, void * data) {
     if (NULL == g_data_array) {
         /* Array doesn't exist, let's allocate it */
 
-        DO_MALLOC(g_data_array, ARRAY_BLK_SZ * sizeof(named_data_t*));
+        MALLOC_OR_GOTO(
+            g_data_array,
+            ARRAY_BLK_SZ * sizeof(named_data_t*),
+            unlock);
         g_data_array_size = ARRAY_BLK_SZ;
 
     } else if (g_num_data_elements == g_data_array_size) {
         /* Array is full, allocate more memory */
-        DO_REALLOC(
+        REALLOC_OR_GOTO(
             g_data_array,
-            (g_data_array_size + ARRAY_BLK_SZ) * sizeof(named_data_t*));
+            (g_data_array_size + ARRAY_BLK_SZ) * sizeof(named_data_t*),
+            unlock);
         g_data_array_size += ARRAY_BLK_SZ;
     }
 
@@ -540,74 +464,60 @@ done:
 ```
 
 To end this piece, I'll leave you with some supporting links for how to safely use goto for error handling, and why perhaps do/while(0) can cause problems (with loops):
-- https://embeddedgurus.com/barr-code/2018/06/cs-goto-keyword-should-we-use-it-or-lose-it/
-- https://ayende.com/blog/183521-C/error-handling-via-goto-in-c
-- https://www.cprogramming.com/tutorial/goto.html
-- https://embeddedgurus.com/stack-overflow/2010/02/goto-heresy/
+- <https://embeddedgurus.com/barr-code/2018/06/cs-goto-keyword-should-we-use-it-or-lose-it/>
+- <https://ayende.com/blog/183521-C/error-handling-via-goto-in-c>
+- <https://www.cprogramming.com/tutorial/goto.html>
+- <https://embeddedgurus.com/stack-overflow/2010/02/goto-heresy/>
 
 
 Until next time!
 
 -Micah
 
-## *12/11/2020* - Postscript; The `else if`
+## *12/11/2020* - Postscript; The "else if" pattern
 
-There is one additional error handling pattern that can work quite well in many situations. I call this one the `else if`.
+There is one additional error handling pattern that can work quite well in many situations. I call this one the "else if".
 
 This pattern works when you're able to construct each line of code as a series of `else if` statements that test for failure with one final `else` for the success-condition. Resource cleanup happens _after_ the final `else` block such that each failure condition and the success condition a followed immediately by resource cleanup.
 
-However, when following this pattern you may at some point need to set a variable in the middle or make some call doesn't chain. This breaks up the `else if` flow and can complicate your error handling pattern. It may be an indication that you should break up the function into multiple functions but resolving these `else if` interruptions in an elegant way often requires careful planning.
+However, when following this pattern you may at some point need to set a variable in the middle or make some call doesn't chain. This breaks up the "else if"-flow and can complicate your error handling pattern. It may be an indication that you should break up the function into multiple functions but resolving these "else if"-interruptions in an elegant way often requires careful planning.
 
-Here's an attempt to apply the `else if` error handling pattern to our example program:
+Here's an attempt to apply the "else if" error handling pattern to our example program:
 
 ```c
-/* Standard libs */
-#include <stdbool.h>    /* For bool */
-#include <stdint.h>     /* For modern integer types */
-#include <stdlib.h>     /* For malloc/free */
-#include <string.h>     /* For strdup */
-#include <stdio.h>      /* For printf */
-
-/* 3rd-party Libs */
-#include <pthread.h>
-
-typedef struct {
-    char * name;
-    void * data;
-} named_data_t;
-
-/* We'll allocate the array of data pointers in increments of 100 */
-#define ARRAY_BLK_SZ 100
-
-static pthread_mutex_t data_array_lock = PTHREAD_MUTEX_INITIALIZER;
-static named_data_t ** g_data_array = NULL;
-static size_t g_data_array_size = 0;    /* Size of array (in element) */
-static size_t g_num_data_elements = 0;  /* Number of element in array */
+#include "sample_test.h"
 
 bool allocate_global_data_array_if_needed() {
-    named_data_t ** temp;
+    bool status = false;
 
-    if ((NULL == g_data_array) &&
-        (NULL == (g_data_array = malloc(
-            ARRAY_BLK_SZ * sizeof(named_data_t*))))) {
-        /* Failed to allocate memory for data array! */
-        return false;
-    } else {
+    if (NULL == g_data_array) {
+        /* Array is not yet allocated */
+        g_data_array = malloc(ARRAY_BLK_SZ * sizeof(named_data_t*));
+        if (NULL == g_data_array) {
+            /* Failed to allocate memory for data array! */
+            goto done;
+        }
         g_data_array_size = ARRAY_BLK_SZ;
     }
 
-    if ((g_num_data_elements == g_data_array_size) &&
-        (NULL == (temp = realloc(
+    if (g_num_data_elements == g_data_array_size) {
+        /* Array is full, attempt to grow the array */
+        named_data_t ** temp;
+        temp = realloc(
             g_data_array,
-            (g_data_array_size + ARRAY_BLK_SZ) * sizeof(named_data_t*))))) {
-        /* Array was is full, and we failed to allocate more memory */
-        return false;
-    } else {
+            (g_data_array_size + ARRAY_BLK_SZ) * sizeof(named_data_t*));
+        if (NULL == temp) {
+            /* Array was is full, and we failed to allocate more memory */
+            goto done;
+        }
         g_data_array = temp;
         g_data_array_size += ARRAY_BLK_SZ;
     }
 
-    return true;
+    status = true;
+
+done:
+    return status;
 }
 
 bool add_element(named_data_t *new_element) {
@@ -658,7 +568,7 @@ bool append_data_element(const char * name, void * data) {
         /* Out of memory! */
     } else {
         /* We're given ownership of the data, so we'll assign the pointer. */
-        new_element->name = data;
+        new_element->data = data;
 
         if (false == add_element(new_element)) {
             /* Failed to add element */
@@ -666,6 +576,7 @@ bool append_data_element(const char * name, void * data) {
             /*
              * Successs
              */
+            status = true;
             printf("add_named_rectangle: Added '%s' element to array!\n", name);
         }
     }
@@ -684,8 +595,8 @@ bool append_data_element(const char * name, void * data) {
 }
 ```
 
-The `else if` pattern is works out ok for a few calls in but it breaks down a bit when you need to set variables or make standalone calls like our call to lock & unlock the mutex, or to allocate memory for the global data array if needed.
+The "else if" pattern works out ok for a few calls in but it breaks down a bit when I needed to set variables and when making standalone calls like our call to lock & unlock the mutex, and to allocate memory as-needed for the global data array.
 
 With some careful planning and well structured functions, this pattern can be quite effective, but it does take a surprising amount of effort.
 
-I used to like the `else if` pattern quite a bit. Nowadays, the `goto done` pattern is my error handling method of choice. The `goto done` pattern is easier to read, write, and maintain.
+I used to like the "else if" pattern quite a bit. Nowadays, the "goto done" pattern is my error handling method of choice. The "goto done" pattern is easier to read, write, and maintain.

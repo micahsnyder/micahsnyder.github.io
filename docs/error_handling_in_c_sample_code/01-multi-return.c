@@ -1,6 +1,11 @@
+/*
+ * Copyright (c) 2020 Micah Snyder
+ *
+ * Example using "multiple-return" pattern.
+ */
+
 /* Standard libs */
 #include <stdbool.h>    /* For bool */
-#include <stdint.h>     /* For modern integer types */
 #include <stdlib.h>     /* For malloc/free */
 #include <string.h>     /* For strdup */
 #include <stdio.h>      /* For printf */
@@ -18,7 +23,7 @@ typedef struct {
 
 static pthread_mutex_t data_array_lock = PTHREAD_MUTEX_INITIALIZER;
 static named_data_t ** g_data_array = NULL;
-static size_t g_data_array_size = 0; /* Size of array (in element) */
+static size_t g_data_array_size = 0;    /* Size of array (in element) */
 static size_t g_num_data_elements = 0;  /* Number of element in array */
 
 /**
@@ -30,30 +35,31 @@ static size_t g_num_data_elements = 0;  /* Number of element in array */
  * @return false    Failed to add element.
  */
 bool append_data_element(const char * name, void * data) {
-    bool status = false;
     named_data_t *new_element = NULL;
 
     if (NULL == name || NULL == data) {
         /* Bad args! */
-        goto done;
+        printf("add_named_rectangle: Invalid arguments!\n");
+        return false;
     }
 
     /* Allocate a new struct to put on our array. */
     new_element = malloc(sizeof(named_data_t));
     if (NULL == new_element) {
         /* Out of memory! */
-        goto done;
+        return false;
     }
 
     /* We don't own the name, so let's duplicate it. */
     new_element->name = strdup(name);
     if (NULL == new_element->name) {
         /* Out of memory! */
-        goto done;
+        free(new_element);
+        return false;
     }
 
     /* We're given ownership of the data, so we'll assign the pointer. */
-    new_element->name = data;
+    new_element->data = data;
 
     /* Lock the array so we can safely add our new element. */
     pthread_mutex_lock(&data_array_lock);
@@ -67,7 +73,10 @@ bool append_data_element(const char * name, void * data) {
         g_data_array = malloc(ARRAY_BLK_SZ * sizeof(named_data_t*));
         if (NULL == g_data_array) {
             /* Failed to allocate memory for data array! */
-            goto unlock;
+            pthread_mutex_unlock(&data_array_lock);
+            free(new_element->name);
+            free(new_element);
+            return false;
         }
 
         g_data_array_size = ARRAY_BLK_SZ;
@@ -81,8 +90,12 @@ bool append_data_element(const char * name, void * data) {
             (g_data_array_size + ARRAY_BLK_SZ) * sizeof(named_data_t*));
         if (NULL == temp) {
             /* Failed to increase size of data array! */
-            goto unlock;
+            pthread_mutex_unlock(&data_array_lock);
+            free(new_element->name);
+            free(new_element);
+            return false;
         }
+
         g_data_array = temp;
         g_data_array_size += ARRAY_BLK_SZ;
     }
@@ -90,32 +103,10 @@ bool append_data_element(const char * name, void * data) {
     g_data_array[g_num_data_elements] = new_element;
     g_num_data_elements += 1;
 
-    /* Success! */
-    status = true;
-
-unlock:
     /* Unlock the array so other threads can access it once more. */
     pthread_mutex_unlock(&data_array_lock);
 
-done:
+    printf("add_named_rectangle: Added '%s' element to array!\n", name);
 
-    if (false == status) {
-        if (NULL != new_element) {
-            if (NULL != new_element->name) {
-                free(new_element->name);
-            }
-            free(new_element);
-        }
-    }
-
-    return status;
-}
-
-int main(void) {
-    if (true == append_data_element("Hello", (void *)"World")) {
-        printf("Added element to array\n");
-        return 0;
-    }
-    printf("Failed to add element to array\n");
-    return 1;
+    return true;
 }
