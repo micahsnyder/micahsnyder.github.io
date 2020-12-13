@@ -31,7 +31,6 @@ jobs:
         uses: lukka/run-cmake@main
         id: runcmake_cmd
         with:
-          working-directory: ${{runner.workspace}}/build
           cmakeGenerator: "Ninja" # Visual Studio 15 2017
           cmakeListsOrSettingsJson: "CMakeListsTxtBasic"
           cmakeListsTxtPath: "${{runner.workspace}}/micahsnyder.github.io/sample_code/error_handling_in_c/CMakeLists.txt"
