@@ -125,10 +125,10 @@ body[data-route=about] p {
 }
 
 a {
-  color: rgb(214, 194, 194);
+  color: lightgray;
 }
 a:visited {
-  color: rgb(209, 154, 154);
+  color: lightgray;
 }
 
 article {
