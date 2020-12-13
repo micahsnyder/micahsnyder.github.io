@@ -22,7 +22,7 @@ I started this blog to share some of the lessons that I've learned along the way
 
 ## Follow me
 
-If you're interested you view my public work on [GitHub](https://github.com/micahsnyder) and [GitLab](https://gitlab.com/micahsnyder) and follow me on [Twitter](https://twitter.com/0xC0000063).
+If you're interested you view my public work on [GitHub](https://github.com/micahsnyder) and [GitLab](https://gitlab.com/micahsnyder) and follow me on [Twitter](https://twitter.com/_micahsnyder).
 
 Until next time!
 
