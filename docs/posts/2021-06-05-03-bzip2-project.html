@@ -5,7 +5,7 @@
   
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width">
-<title>Index</title>
+<title>Maintaining BZip2</title>
 <link href='https://fonts.googleapis.com/css?family=Muli:400,300' rel='stylesheet' type='text/css'>
 <link href='https://fonts.googleapis.com/css?family=Lobster%20Two:400,300' rel='stylesheet' type='text/css'>
 <link href='https://fonts.googleapis.com/css?family=Fira%20Code:400,300' rel='stylesheet' type='text/css'>
@@ -25,18 +25,22 @@
 
   <div class="outerDiv">
     <div class="leftDiv">
-      <h1>Introduction</h1>
-<p>2020-12-11 07:32:09 +0000</p>
+      <h1>Maintaining BZip2</h1>
+<p>2021-06-06 05:06:21 +0000</p>
 <hr />
-<center><img src="/images/me.png" width="250" height="250"></center>
-<p>Hi, I'm Micah Snyder. I'm what you might think of as a typical systems software developer. These days I primarily manage and develop on <a href="https://github.com/Cisco-Talos/clamav-devel">a large cross-platform open-source C codebase</a>. I'm also an experienced and enthusiastic Python 🐍 programmer. Lately I've taken a fascination with the Rust 🦀 programming language. I'm still a novice Rustacean and can't wait to use Rust more professionally.</p>
-<h2>Why blog?</h2>
-<p>I haven't always been an open-source software contributor. To be honest, I kind-of lucked into my current role as an open source product owner and lead developer. On this journey I've faced a non-stop series of challenges relating to project management, team leadership, inter-product collaboration, open source software release engineering, security vulnerability disclosure, and of course software development. It's a fun ride!</p>
-<p>I started this blog to share some of the lessons that I've learned along the way.</p>
-<h2>Follow me</h2>
-<p>If you're interested you view my public work on <a href="https://github.com/micahsnyder">GitHub</a> and <a href="https://gitlab.com/micahsnyder">GitLab</a> and follow me on <a href="https://twitter.com/_micahsnyder">Twitter</a>.</p>
-<p>Until next time!</p>
-<p>-Micah</p>
+<center><img src="/images/bzip2-logo.png"></center>
+<p>I am excited and honored to share that I will be taking up the role as <a href="https://people.gnome.org/%7Efederico/blog/bzip2-changing-maintainership.html">primary maintainer for the BZip2 project</a>.</p>
+<p>In 2019, Julian Seward handed over maintainership of the current stable release (1.0, currently at 1.0.8) to <a href="https://sourceware.org/git/?p=bzip2.git;a=summary">Mark Wielaard at Sourceware</a>, and maintainership of the <a href="https://people.gnome.org/%7Efederico/blog/maintaining-bzip2.html">development of future releases to Federico Mena</a>. I joined in to help Federico as a developer, primarily focused on creating BZip2's new CMake build system.</p>
+<p>Since picking up the project, Federico found less time to work on BZip2 than he had hoped. This past week while discussing my role and the future of the project, Federico surprised me with the question of whether or not I'd be interested in taking the reins. With some consideration, I agreed take ownership of the BZip2 development effort. Though I am particularly experienced with data compression theory, I have a strong background in C, have a keen interest in Rust, and have experience maintaining open source software.</p>
+<p>I look forward working more with BZip2 and preparing the project for a 1.1 release.</p>
+<hr />
+<p><em><strong>Important</strong></em>: As a part of the ownership change, the BZip2 repository has been moved to a new &quot;bzip2&quot; group (org) on GitLab.</p>
+<ul>
+<li>Was: <a href="https://gitlab.com/federicomenaquintero/bzip2">https://gitlab.com/federicomenaquintero/bzip2</a></li>
+<li>Is now: <a href="https://gitlab.com/bzip2/bzip2">https://gitlab.com/bzip2/bzip2</a></li>
+</ul>
+<p>Federico now maintains a fork of the project for his own development work. Unfortuantely, <a href="https://gitlab.com/federicomenaquintero/bzip2">https://gitlab.com/federicomenaquintero/bzip2</a> will not automatically redirect to <a href="https://gitlab.com/bzip2/bzip2">https://gitlab.com/bzip2/bzip2</a>.</p>
+<p>Please update your links as needed to account for the URL change.</p>
 
       <footer>
         <footer>
